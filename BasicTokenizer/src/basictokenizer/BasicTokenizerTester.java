@@ -54,6 +54,10 @@ public class BasicTokenizerTester {
 //        BasicTokenizerTester.failureCount++;
         return testingPassed;
     }
+    
+    public static boolean testIsItOne(int one) throws Exception {
+        return one == 1;
+    }
 
     public static boolean testThrowAnException() throws Exception {
         throw new Exception("Test exception thrown.");
@@ -71,13 +75,11 @@ public class BasicTokenizerTester {
 
         testCases.put("BasicTokenizer1 - all tests passed ",
                 () -> BasicTokenizerTester.allTestingPassed());
-        testCases.put("BasicTokenizer2 - all tests passed ",
-                () -> BasicTokenizerTester.allTestingPassed());
-        testCases.put("BasicTokenizer3 - all tests passed ",
-                () -> BasicTokenizerTester.allTestingPassed());
-        testCases.put("BasicTokenizer4 - all tests passed ",
-                () -> BasicTokenizerTester.allTestingPassed());
-        testCases.put("ThrowAnException - just throw an exception ",
+        testCases.put("IsItOne1 - demo sending parameters to test method. ",
+                () -> BasicTokenizerTester.testIsItOne(1));
+        testCases.put("IsItOne2 - demo failing test ",
+                () -> BasicTokenizerTester.testIsItOne(2));
+        testCases.put("ThrowAnException - demo test that throws exception ",
                 () -> BasicTokenizerTester.testThrowAnException());
 
         //Execute test cases
@@ -117,7 +119,7 @@ public class BasicTokenizerTester {
 
             try {
                 BasicTokenizerTester.testingCount++;
-                System.out.println("[" + BasicTokenizerTester.testingCount + "] TESTING: " + testName);
+                //System.out.println("[" + BasicTokenizerTester.testingCount + "] TESTING: " + testName);
                 testResult = testEntry.getValue().call();
             } catch (Exception ex) {
                 errorMessage = ex.getMessage();
