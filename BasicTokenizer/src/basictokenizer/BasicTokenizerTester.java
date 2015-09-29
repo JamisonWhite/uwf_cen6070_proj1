@@ -44,20 +44,30 @@ public class BasicTokenizerTester {
      * @return true test passes, false otherwise
      */
     public static boolean testCase001() {
-        boolean testingPassed = true;
+
+        //Arrange
+        BasicTokenizer tokenizer;
         
-        // T001 test of constructor BasicTokenizer(str)
-        try {
-            BasicTokenizer tokenizer = new BasicTokenizer(null);
-             
-            testingPassed = false;
-        } catch (java.lang.NullPointerException e) {
-            // expected result
-        } catch (Exception e) {
-            testingPassed = false;
-        }
+        //Act
+        tokenizer = new BasicTokenizer(null);
         
-        return testingPassed;
+        //Assert
+        return tokenizer != null;
+        
+        
+//        boolean testingPassed = true;
+//        
+//        // T001 test of constructor BasicTokenizer(str)
+//        try {
+//             
+//            testingPassed = false;
+//        } catch (java.lang.NullPointerException e) {
+//            // expected result
+//        } catch (Exception e) {
+//            testingPassed = false;
+//        }
+//        
+//        return testingPassed;
     }
 
     /**
@@ -199,7 +209,7 @@ public class BasicTokenizerTester {
         TreeMap<String, Callable<Boolean>> testCases = new TreeMap<>();
 
         testCases.put("Test Case T001 - Boundary Value test first constructor ",
-                () -> BasicTokenizerTester.testCase001());
+                () -> TestCase001.execute());
         testCases.put("Test Case T002 - Boundary Value test first constructor ",
                 () -> BasicTokenizerTester.testCase002());
         testCases.put("Test Case T003 - Boundary Value test first constructor ",
