@@ -23,58 +23,6 @@ import java.util.concurrent.Callable;
  */
 public class BasicTokenizerTester {
 
-
-    //=============================================
-    // Public Test Case Methods
-    //=============================================
-    private static void executeTestCases(List<TestCase> testCases, List<TestCase> exceptionCases) {
-
-        int testCaseCount = 0;
-        int passingCaseCount = 0;
-        int failedCaseCount = 0;
-
-        //Call each of the tests and report results.
-        System.out.println("---------------------------------");
-        System.out.println("-- Starting Test Suite");
-        System.out.println("---------------------------------");
-
-        for (TestCase testCase : testCases) {
-            testCaseCount++;
-            try {
-                if (testCase.execute()) {
-                    passingCaseCount++;
-                    System.out.println("[" + testCaseCount + "] PASSED: " + testCase.getName());
-                } else {
-                    failedCaseCount++;
-                    System.out.println("[" + testCaseCount + "] FAILED: " + testCase.getName());
-                }
-            } catch (Exception ex) {
-                failedCaseCount++;
-                System.out.println("[" + testCaseCount + "] FAILED: " + testCase.getName() + " ERROR: " + ex.getMessage());
-            }
-        }
-
-        for (TestCase testCase : exceptionCases) {
-            testCaseCount++;
-            try {
-                testCase.execute();
-                failedCaseCount++;
-                System.out.println("[" + testCaseCount + "] FAILED: " + testCase.getName());
-            } catch (Exception ex) {
-                passingCaseCount++;
-                System.out.println("[" + testCaseCount + "] PASSED: " + testCase.getName() + " ERROR: " + ex.getMessage());
-            }
-        }
-
-        System.out.println("---------------------------------");
-        System.out.println("-- Completed Test Suite");
-        System.out.println("-- " + testCaseCount + " Total Tests");
-        System.out.println("-- " + passingCaseCount + " Passing Tests");
-        System.out.println("-- " + failedCaseCount + " Failing Tests");
-        System.out.println("---------------------------------");
-
-    }
-
     //=============================================
     // Main method to start console app
     //=============================================
@@ -123,5 +71,58 @@ public class BasicTokenizerTester {
         
         
     } // end main
+
+    /**
+     * Execute and report all test cases
+     * @param testCases
+     * @param exceptionCases 
+     */
+    private static void executeTestCases(List<TestCase> testCases, List<TestCase> exceptionCases) {
+
+        int testCaseCount = 0;
+        int passingCaseCount = 0;
+        int failedCaseCount = 0;
+
+        //Call each of the tests and report results.
+        System.out.println("---------------------------------");
+        System.out.println("-- Starting Test Suite");
+        System.out.println("---------------------------------");
+
+        for (TestCase testCase : testCases) {
+            testCaseCount++;
+            try {
+                if (testCase.execute()) {
+                    passingCaseCount++;
+                    System.out.println("[" + testCaseCount + "] PASSED: " + testCase.getName());
+                } else {
+                    failedCaseCount++;
+                    System.out.println("[" + testCaseCount + "] FAILED: " + testCase.getName());
+                }
+            } catch (Exception ex) {
+                failedCaseCount++;
+                System.out.println("[" + testCaseCount + "] FAILED: " + testCase.getName() + " ERROR: " + ex.getMessage());
+            }
+        }
+
+        for (TestCase testCase : exceptionCases) {
+            testCaseCount++;
+            try {
+                testCase.execute();
+                failedCaseCount++;
+                System.out.println("[" + testCaseCount + "] FAILED: " + testCase.getName());
+            } catch (Exception ex) {
+                passingCaseCount++;
+                System.out.println("[" + testCaseCount + "] PASSED: " + testCase.getName() + " ERROR: " + ex.getMessage());
+            }
+        }
+
+        System.out.println("---------------------------------");
+        System.out.println("-- Completed Test Suite");
+        System.out.println("-- " + testCaseCount + " Total Tests");
+        System.out.println("-- " + passingCaseCount + " Passing Tests");
+        System.out.println("-- " + failedCaseCount + " Failing Tests");
+        System.out.println("---------------------------------");
+
+    }
 
 } // end class BasicTokenizerTester
