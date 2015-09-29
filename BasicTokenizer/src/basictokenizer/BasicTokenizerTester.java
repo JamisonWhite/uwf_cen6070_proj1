@@ -38,8 +38,7 @@ public class BasicTokenizerTester {
 
         //TODO We need the Decision table to help us narrow down the possibilities!
         
-        //Test Constructors
-        
+        //Test Constructors        
         testCases.add(new TestConstructor1("TC001 -- Constructor 1 valid text.", "a b c d"));
         testCases.add(new TestConstructor1("TC002 -- Constructor 1 empty text.", ""));
         errCases.add(new TestConstructor1("TC003 -- Constructor 1 null text. Throws exception.", null));

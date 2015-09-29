@@ -1,0 +1,11 @@
+<#if licenseFirst??>
+${licenseFirst}
+</#if>
+${licensePrefix}UWF CEN6070 Fall 2015 Project 1
+${licensePrefix}  Justin Lambert
+${licensePrefix}  Salina Hall
+${licensePrefix}  Jamie White
+${licensePrefix}  Michael Worn
+<#if licenseLast??>
+${licenseLast}
+</#if>
