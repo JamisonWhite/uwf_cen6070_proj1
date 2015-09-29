@@ -14,6 +14,10 @@ import java.util.concurrent.Callable;
  */
 public class BasicTokenizerTester {
 
+   //=============================================
+   // Static class attributes
+   //=============================================
+
     /**
      * The total number of tests executed
      */
@@ -28,30 +32,100 @@ public class BasicTokenizerTester {
      * The total number of failed tests
      */
     public static int failureCount;
+    
+   //=============================================
+   // Public Test Case Methods
+   //=============================================
 
     /**
-     * BasicTokenizer unit test driver
+     * Test case T001
+     * Test of constructor BasicTokenizer(str)
      *
-     * @return true if all tests pass, false otherwise
+     * @return true test passes, false otherwise
      */
-    public static boolean allTestingPassed() {
+    public static boolean testCase001() {
         boolean testingPassed = true;
-
-        // A basic sample of one of the constructors to get started
-        // Reference appendix sample console output that says which
-        // test case passed from Testing Documentation
-        System.out.println("Let's test the basic tokenizer!");
-
-        BasicTokenizer bt = new BasicTokenizer("this is a test");
-        while (bt.hasMoreTokens()) {
-            System.out.println(bt.nextToken());
+        
+        // T001 test of constructor BasicTokenizer(str)
+        try {
+            BasicTokenizer tokenizer = new BasicTokenizer(null);
+             
+            testingPassed = false;
+        } catch (java.lang.NullPointerException e) {
+            // expected result
+        } catch (Exception e) {
+            testingPassed = false;
         }
+        
+        return testingPassed;
+    }
 
-//        // if test case passed
-//        BasicTokenizerTester.passingCount++;
-//
-//        // or if failed
-//        BasicTokenizerTester.failureCount++;
+    /**
+     * Test case T002
+     * Test of constructor BasicTokenizer(str)
+     *
+     * @return true test passes, false otherwise
+     */
+    public static boolean testCase002() {
+        boolean testingPassed = true;
+        
+        // T001 test of constructor BasicTokenizer(str)
+        try {
+            BasicTokenizer tokenizer = new BasicTokenizer(null);
+             
+            testingPassed = false;
+        } catch (java.lang.NullPointerException e) {
+            // expected result
+        } catch (Exception e) {
+            testingPassed = false;
+        }
+        
+        return testingPassed;
+    }
+
+    /**
+     * Test case T003
+     * Test of constructor BasicTokenizer(str)
+     *
+     * @return true test passes, false otherwise
+     */
+    public static boolean testCase003() {
+        boolean testingPassed = true;
+        
+        // T001 test of constructor BasicTokenizer(str)
+        try {
+            BasicTokenizer tokenizer = new BasicTokenizer(null);
+             
+            testingPassed = false;
+        } catch (java.lang.NullPointerException e) {
+            // expected result
+        } catch (Exception e) {
+            testingPassed = false;
+        }
+        
+        return testingPassed;
+    }
+
+    /**
+     * Test case T004
+     * Test of constructor BasicTokenizer(str)
+     *
+     * @return true test passes, false otherwise
+     */
+    public static boolean testCase004() {
+        boolean testingPassed = true;
+        
+        // T001 test of constructor BasicTokenizer(str)
+        try {
+            BasicTokenizer tokenizer = new BasicTokenizer(null);
+             
+            testingPassed = false;
+        } catch (java.lang.NullPointerException e) {
+            // expected result
+        } catch (Exception e) {
+            testingPassed = false;
+        }
+        
         return testingPassed;
     }
     
@@ -59,48 +133,14 @@ public class BasicTokenizerTester {
         return one == 1;
     }
 
+    /**
+     * Throw unexpected exception while testing scenario
+     * @return
+     * @throws Exception 
+     */
     public static boolean testThrowAnException() throws Exception {
         throw new Exception("Test exception thrown.");
     }
-
-    /**
-     * The test driver for class BasicTokenizer
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-
-        //Ordered HashMap with name of the test and a method call
-        TreeMap<String, Callable<Boolean>> testCases = new TreeMap<>();
-
-        testCases.put("BasicTokenizer1 - all tests passed ",
-                () -> BasicTokenizerTester.allTestingPassed());
-        testCases.put("IsItOne1 - demo sending parameters to test method. ",
-                () -> BasicTokenizerTester.testIsItOne(1));
-        testCases.put("IsItOne2 - demo failing test ",
-                () -> BasicTokenizerTester.testIsItOne(2));
-        testCases.put("ThrowAnException - demo test that throws exception ",
-                () -> BasicTokenizerTester.testThrowAnException());
-
-        //Execute test cases
-        BasicTokenizerTester.executeTestCases(testCases);
-
-        System.out.println("");
-        System.out.println("");
-
-        System.out.println("---------------------------------");
-        System.out.println("-- Original code");
-        System.out.println("---------------------------------");
-        boolean allPassed = BasicTokenizerTester.allTestingPassed();
-        if (allPassed) {
-            System.out.println("BasicTokenizer - all tests passed");
-        } else {
-            int total = BasicTokenizerTester.passingCount + BasicTokenizerTester.failureCount;
-
-            System.out.println("BasicTokenizer - " + BasicTokenizerTester.failureCount
-                    + " FAILURE OUT OF " + total + " TEST CASES");
-        }
-    } // end main
 
     /**
      * Execute test cases and report results.
@@ -112,6 +152,7 @@ public class BasicTokenizerTester {
         System.out.println("---------------------------------");
         System.out.println("-- Starting Test Suite");
         System.out.println("---------------------------------");
+        
         for (Map.Entry<String, Callable<Boolean>> testEntry : testCases.entrySet()) {
             String testName = testEntry.getKey();
             Boolean testResult = false;
@@ -124,6 +165,7 @@ public class BasicTokenizerTester {
             } catch (Exception ex) {
                 errorMessage = ex.getMessage();
             }
+            
             if (testResult) {
                 BasicTokenizerTester.passingCount++;
                 System.out.println("[" + BasicTokenizerTester.testingCount + "] PASSED: " + testName);
@@ -133,6 +175,7 @@ public class BasicTokenizerTester {
                         + (("".equals(errorMessage) ? "" : " ERROR: " + errorMessage)));
             }
         }
+        
         System.out.println("---------------------------------");
         System.out.println("-- Completed Test Suite");
         System.out.println("-- " + BasicTokenizerTester.testingCount + " Total Tests");
@@ -140,5 +183,38 @@ public class BasicTokenizerTester {
         System.out.println("-- " + BasicTokenizerTester.failureCount + " Failing Tests");
         System.out.println("---------------------------------");
     }
+
+   //=============================================
+   // Main method to start console app
+   //=============================================
+
+    /**
+     * The test driver for class BasicTokenizer
+     *
+     * @param args
+     */
+    public static void main(String[] args) {
+
+        //Ordered HashMap with name of the test and a method call
+        TreeMap<String, Callable<Boolean>> testCases = new TreeMap<>();
+
+        testCases.put("Test Case T001 - Boundary Value test first constructor ",
+                () -> BasicTokenizerTester.testCase001());
+        testCases.put("Test Case T002 - Boundary Value test first constructor ",
+                () -> BasicTokenizerTester.testCase002());
+        testCases.put("Test Case T003 - Boundary Value test first constructor ",
+                () -> BasicTokenizerTester.testCase003());
+        testCases.put("Test Case T004 - Boundary Value test first constructor ",
+                () -> BasicTokenizerTester.testCase004());
+        testCases.put("IsItOne1 - demo sending parameters to test method. ",
+                () -> BasicTokenizerTester.testIsItOne(1));
+        testCases.put("IsItOne2 - demo failing test ",
+                () -> BasicTokenizerTester.testIsItOne(2));
+        testCases.put("ThrowAnException - demo test that throws exception ",
+                () -> BasicTokenizerTester.testThrowAnException());
+
+        //Execute test cases
+        BasicTokenizerTester.executeTestCases(testCases);
+    } // end main
 
 } // end class BasicTokenizerTester
