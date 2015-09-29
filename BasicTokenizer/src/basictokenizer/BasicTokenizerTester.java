@@ -204,7 +204,8 @@ public class BasicTokenizerTester {
      * @param args
      */
     public static void main(String[] args) {
-
+      
+        
         //Ordered HashMap with name of the test and a method call
         TreeMap<String, Callable<Boolean>> testCases = new TreeMap<>();
 
