@@ -9,6 +9,9 @@ package basictokenizer;
 
 /**
  * Test BasicTokenizer hasMoreElements == expected
+ * BasicTokenizer MethodSummary 
+ *      Returns the same value as the hasMoreTokens method...
+ *      Tests if there are more tokens available from this tokenizer's string.
  * @author jamie
  */
 public class TestHasMoreElements implements TestCase {

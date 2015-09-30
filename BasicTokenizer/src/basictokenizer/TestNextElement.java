@@ -9,6 +9,9 @@ package basictokenizer;
 
 /**
  * Test BasicTokenizer NextElement == expected
+ * BasicTokenizer MethodSummary 
+ *      Returns the same value as the nextToken method, except that its declared return value is Object rather than String...
+ *      Returns the next token from this string tokenizer.
  * @author jamie
  */
 public class TestNextElement implements TestCase {
