@@ -39,7 +39,8 @@ public class TestNextTokenDelim implements TestCase {
 
     @Override
     public Boolean execute() {   
-        return expected.equals(this.basicTokenizer.nextToken(delim));
+        String token = this.basicTokenizer.nextToken(delim);
+        return expected.equals(token);
     }
  
 }
