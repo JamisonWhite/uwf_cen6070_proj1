@@ -44,13 +44,15 @@ public class BasicTokenizerTester {
         errCases.add(new TestConstructor1("TC003 -- Constructor 1 null text. Throws exception.", null));
         testCases.add(new TestConstructor2("TC004 -- Constructor 2 valid text.", "a b c d", " "));
         testCases.add(new TestConstructor2("TC005 -- Constructor 3 empty text.", "", ""));
-        errCases.add(new TestConstructor2("TC006 -- Constructor 4 null text. Throws exception.", null, null));
+        testCases.add(new TestConstructor2("TC006 -- Constructor 3 non-unique delimiters.", "a,b,c,d", ",,,,,,bbbbbcccccdddddd"));
+        errCases.add(new TestConstructor2("TC007 -- Constructor 4 null text. Throws exception.", null, null));
         //etc....
 
         //Test CountTokens
         testCases.add(new TestCountTokens("TC007 -- CountTokens normal.", new BasicTokenizer("a b c d"), 4));
         testCases.add(new TestCountTokens("TC007 -- CountTokens no delimiter.", new BasicTokenizer("abcd"), 1));
         errCases.add(new TestCountTokens("TC007 -- CountTokens null delimiter. Throws exception.", new BasicTokenizer("a b c d", null), 0));
+        testCases.add(new TestCountTokens("TC007 -- CountTokens empty text.", new BasicTokenizer(""), 0));
         //etc....
 
         //Test HasMoreTokens
@@ -58,6 +60,13 @@ public class BasicTokenizerTester {
         //Test NextToken
         
         //Test NextToken(delim)
+        testCases.add(new TestNextTokenDelim("TC151 -- NextTokenDelim normal", new BasicTokenizer("a b,c d", " "), "a b", ","));
+        testCases.add(new TestNextTokenDelim("TC152 -- NextTokenDelim non-unique delimiters", new BasicTokenizer("a b,c d", " "), "a b", ",,,,,"));
+        errCases.add(new TestNextTokenDelim("TC153 -- NextTokenDelim null delimiter", new BasicTokenizer("a b,c d", " "), "a b,c d", null));
+        testCases.add(new TestNextTokenDelim("TC154 -- NextTokenDelim empty delimiter", new BasicTokenizer("a b,c d", " "), "a b,c d", ""));
+        testCases.add(new TestNextTokenDelim("TC155 -- NextTokenDelim text does not contain delimiter", new BasicTokenizer("a b,c d", " "), "a b,c d", ";"));
+        testCases.add(new TestNextTokenDelim("TC156 -- NextTokenDelim empty text", new BasicTokenizer("", " "), "", ","));
+        
         
         //Test HasMoreElements
         
