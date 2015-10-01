@@ -122,27 +122,40 @@ public class BasicTokenizerTester {
                 false,
                 () -> testNextToken(new BasicTokenizer("a b c d", null), null));
 
-        //Test NextToken(delim)
-        evaluateTestCase("T151", "NextTokenDelim normal", 
-                true,
-                () -> testNextTokenDelim(new BasicTokenizer("a b,c d"), ",", "a b"));
+        //Test NextToken(delim)        
+        evaluateTestCaseForException("T151", "R2 NextTokenDelim empty string, null delim.", 
+                () -> testNextTokenDelim(new BasicTokenizer("a b,c d"), null));
+        
+        evaluateTestCase("T152", "R3 NextTokenDelim empty string, empty delim.", 
+                "",
+                () -> testNextTokenDelim(new BasicTokenizer(""), ""));
 
-        evaluateTestCase("T151", "NextTokenDelim null delim", 
-                false,
-                () -> testNextTokenDelim(new BasicTokenizer("a b,c d"), null, ""));
+        evaluateTestCase("T153", "R4 NextTokenDelim empty string, valid delim.", 
+                "",
+                () -> testNextTokenDelim(new BasicTokenizer(""), ","));
+        
+        
+        evaluateTestCaseForException("T154", "R5 NextTokenDelim non-delimited string, null delim.", 
+                () -> testNextTokenDelim(new BasicTokenizer("abcd"), null));
 
-        evaluateTestCase("T151", "NextTokenDelim empty delim", 
-                true,
-                () -> testNextTokenDelim(new BasicTokenizer("a b,c d"), "", "a b,c d"));
+        evaluateTestCase("T155", "R6 NextTokenDelim non-delimited string, empty delim.", 
+                "abcd",
+                () -> testNextTokenDelim(new BasicTokenizer("abcd"), ""));        
+        
+        evaluateTestCase("T156", "R7 NextTokenDelim non-delimited  string, valid delim, delims are not tokens.", 
+                "abcd",
+                () -> testNextTokenDelim(new BasicTokenizer("abcd", " ", false), ","));
+        
+        evaluateTestCase("T157", "R8 NextTokenDelim non-delimited  string, valid delim, delims are tokens.", 
+                "abcd",
+                () -> testNextTokenDelim(new BasicTokenizer("abcd", " ", true), ","));
+        
+        
+        
 
-        evaluateTestCase("T151", "NextTokenDelim text does not contain delimiter", 
-                true,
-                () -> testNextTokenDelim(new BasicTokenizer("a b,c d"), ";", "a b,c d"));
-
-        evaluateTestCase("T151", "NextTokenDelim empty text", 
-                true,
-                () -> testNextTokenDelim(new BasicTokenizer(""), " ", ""));
-
+        
+        
+        
         //Test HasMoreElements
         evaluateTestCase("T101", "hasMoreTokens normal", 
                 true,
@@ -349,11 +362,10 @@ public class BasicTokenizerTester {
      *
      * @param basicTokenizer
      * @param delim
-     * @param expected
      * @return
      */
-    private static Boolean testNextTokenDelim(BasicTokenizer basicTokenizer, String delim, String expected) {
-        return expected.equals(basicTokenizer.nextToken(delim));
+    private static String testNextTokenDelim(BasicTokenizer basicTokenizer, String delim) {
+        return basicTokenizer.nextToken(delim);
     }
 
     /**
