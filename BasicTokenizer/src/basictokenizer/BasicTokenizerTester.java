@@ -10,6 +10,7 @@ package basictokenizer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 /**
  * <p>
@@ -32,153 +33,197 @@ public class BasicTokenizerTester {
     public static void main(String[] args) {
 
         //TODO We need the Decision table to help us narrow down the possibilities!
-        
-        
         useSubmissionFormat = false;
-        
+
         //Test Constructors        
-        writeTestResult("TXXX", "Constructor 1 valid text.", true,
-                testConstructor("a b c d"));
+        evaluateTestCase("TXXX", "Constructor 1 null text.", false, null,
+                () -> testConstructor(null));
 
-        writeTestResult("TXXX", "Constructor 1 empty text.", true,
-                testConstructor(""));
+        evaluateTestCase("TXXX", "Constructor 1 valid text.", true,
+                () -> testConstructor("a b c d"));
 
-        writeTestResult("TXXX", "Constructor 1 null text. Should fail.", false,
-                testConstructor(null));
+        evaluateTestCase("TXXX", "Constructor 1 empty text.", true,
+                () -> testConstructor(""));
 
-        writeTestResult("TXXX", "Constructor 2 valid text and valid delim.", true,
-                testConstructor("a b c d", " "));
+        evaluateTestCase("TXXX", "Constructor 2 valid text and valid delim.", true,
+                () -> testConstructor("a b c d", " "));
 
-        writeTestResult("TXXX", "Constructor 2 valid text and empty delim.", true,
-                testConstructor("a b c d", ""));
+        evaluateTestCase("TXXX", "Constructor 2 valid text and empty delim.", true,
+                () -> testConstructor("a b c d", ""));
 
-        writeTestResult("TXXX", "Constructor 2 valid text and null delim.", true,
-                testConstructor("a b c d", null));
+        evaluateTestCase("TXXX", "Constructor 2 valid text and null delim.", true,
+                () -> testConstructor("a b c d", null));
 
-        writeTestResult("TXXX", "Constructor 2 valid text and valid delim and true.", true,
-                testConstructor("a b c d", " ", true));
+        evaluateTestCase("TXXX", "Constructor 2 valid text and valid delim and true.", true,
+                () -> testConstructor("a b c d", " ", true));
 
-        writeTestResult("TXXX", "Constructor 2 valid text and valid delim and false.", true,
-                testConstructor("a b c d", " ", false));
+        evaluateTestCase("TXXX", "Constructor 2 valid text and valid delim and false.", true,
+                () -> testConstructor("a b c d", " ", false));
 
-        writeTestResult("TXXX", "Constructor 2 valid text and non-unique delim.", true,
-                testConstructor("a b c d", "   ,,,,,,"));
+        evaluateTestCase("TXXX", "Constructor 2 valid text and non-unique delim.", true,
+                () -> testConstructor("a b c d", "   ,,,,,,"));
 
         //Test CountTokens        
-        writeTestResult("TXXX", "countTokens normal.", true,
-                testCountTokens(new BasicTokenizer("a b c d"), 4));
+        evaluateTestCase("TXXX", "countTokens normal.", true,
+                () -> testCountTokens(new BasicTokenizer("a b c d"), 4));
 
-        writeTestResult("TXXX", "countTokens no delims in text.", true,
-                testCountTokens(new BasicTokenizer("abcd"), 1));
+        evaluateTestCase("TXXX", "countTokens no delims in text.", true,
+                () -> testCountTokens(new BasicTokenizer("abcd"), 1));
 
-        writeTestResult("TXXX", "countTokens empty delims.", true,
-                testCountTokens(new BasicTokenizer("a b c d", ""), 1));
+        evaluateTestCase("TXXX", "countTokens empty delims.", true,
+                () -> testCountTokens(new BasicTokenizer("a b c d", ""), 1));
 
-        writeTestResult("TXXX", "countTokens null delim. Should fail.", false,
-                testCountTokens(new BasicTokenizer("a b c d", null), 0));
+        evaluateTestCase("TXXX", "countTokens null delim.", true, true,
+                () -> testCountTokens(new BasicTokenizer("a b c d", null), 0));
 
-        writeTestResult("TXXX", "countTokens empty text.", true,
-                testCountTokens(new BasicTokenizer(""), 0));
+        evaluateTestCase("TXXX", "countTokens empty text.", true,
+                () -> testCountTokens(new BasicTokenizer(""), 0));
         //etc....
 
         //Test HasMoreTokens
-        writeTestResult("TXXX", "hasMoreTokens normal.", true,
-                testHasMoreTokens(new BasicTokenizer("a b c d"), true));
+        evaluateTestCase("TXXX", "hasMoreTokens normal.", true,
+                () -> testHasMoreTokens(new BasicTokenizer("a b c d"), true));
 
-        writeTestResult("TXXX", "hasMoreTokens no delims in text.", true,
-                testHasMoreTokens(new BasicTokenizer("abcd"), true));
+        evaluateTestCase("TXXX", "hasMoreTokens no delims in text.", true,
+                () -> testHasMoreTokens(new BasicTokenizer("abcd"), true));
 
-        writeTestResult("TXXX", "hasMoreTokens empty text.", true,
-                testHasMoreTokens(new BasicTokenizer(""), true));
+        evaluateTestCase("TXXX", "hasMoreTokens empty text.", true,
+                () -> testHasMoreTokens(new BasicTokenizer(""), true));
 
-        writeTestResult("TXXX", "hasMoreTokens null delim. Should fail.", false,
-                testHasMoreTokens(new BasicTokenizer("a b c d", null), true));
+        evaluateTestCase("TXXX", "hasMoreTokens null delim. Should fail.", false,
+                () -> testHasMoreTokens(new BasicTokenizer("a b c d", null), true));
 
         //Test NextToken
-        writeTestResult("T055", "nextToken normal.", true,
-                testNextToken(new BasicTokenizer("a b c d"), "a"));
+        evaluateTestCase("T055", "nextToken normal.", true,
+                () -> testNextToken(new BasicTokenizer("a b c d"), "a"));
 
-        writeTestResult("T056", "nextToken no delimiter.", true,
-                testNextToken(new BasicTokenizer("abcd"), "abcd"));
+        evaluateTestCase("T056", "nextToken no delimiter.", true,
+                () -> testNextToken(new BasicTokenizer("abcd"), "abcd"));
 
-        writeTestResult("T057", "nextToken  null delimiter. Throws exception.", false,
-                testNextToken(new BasicTokenizer("a b c d", null), null));
+        evaluateTestCase("T057", "nextToken  null delimiter. Throws exception.", false,
+                () -> testNextToken(new BasicTokenizer("a b c d", null), null));
 
         //Test NextToken(delim)
-        writeTestResult("T151", "NextTokenDelim normal", true,
-                testNextTokenDelim(new BasicTokenizer("a b,c d", " "), ",", "a b"));
+        evaluateTestCase("T151", "NextTokenDelim normal", true,
+                () -> testNextTokenDelim(new BasicTokenizer("a b,c d"), ",", "a b"));
 
-        writeTestResult("T151", "NextTokenDelim null delim", false,
-                testNextTokenDelim(new BasicTokenizer("a b,c d", " "), null, ""));
+        evaluateTestCase("T151", "NextTokenDelim null delim", false,
+                () -> testNextTokenDelim(new BasicTokenizer("a b,c d"), null, ""));
 
-        writeTestResult("T151", "NextTokenDelim empty delim", true,
-                testNextTokenDelim(new BasicTokenizer("a b,c d", " "), "", "a b,c d"));
+        evaluateTestCase("T151", "NextTokenDelim empty delim", true,
+                () -> testNextTokenDelim(new BasicTokenizer("a b,c d"), "", "a b,c d"));
 
-        writeTestResult("T151", "NextTokenDelim text does not contain delimiter", true,
-                testNextTokenDelim(new BasicTokenizer("a b,c d", " "), ";", "a b,c d"));
+        evaluateTestCase("T151", "NextTokenDelim text does not contain delimiter", true,
+                () -> testNextTokenDelim(new BasicTokenizer("a b,c d"), ";", "a b,c d"));
 
-        writeTestResult("T151", "NextTokenDelim empty text", true,
-                testNextTokenDelim(new BasicTokenizer("", ""), "", ""));
+        evaluateTestCase("T151", "NextTokenDelim empty text", true,
+                () -> testNextTokenDelim(new BasicTokenizer(""), " ", ""));
 
         //Test HasMoreElements
-        writeTestResult("T101", "hasMoreTokens normal", true,
-                testHasMoreElements(new BasicTokenizer("a b c d"), true));
+        evaluateTestCase("T101", "hasMoreTokens normal", true,
+                () -> testHasMoreElements(new BasicTokenizer("a b c d"), true));
 
-        writeTestResult("T102", "hasMoreTokens delimiter not in text", true,
-                testHasMoreElements(new BasicTokenizer("abcd"), true));
+        evaluateTestCase("T102", "hasMoreTokens delimiter not in text", true,
+                () -> testHasMoreElements(new BasicTokenizer("abcd"), true));
 
-        writeTestResult("T103", "hasMoreTokens null delimiter.", false,
-                testHasMoreElements(new BasicTokenizer("a b c d", null), true));
+        evaluateTestCase("T103", "hasMoreTokens null delimiter.", false,
+                () -> testHasMoreElements(new BasicTokenizer("a b c d", null), true));
 
         //Test NextElement
-        writeTestResult("T105", "nextElement normal", true,
-                testNextElement(new BasicTokenizer("a b c d"), "a"));
+        evaluateTestCase("T105", "nextElement normal", true,
+                () -> testNextElement(new BasicTokenizer("a b c d"), "a"));
 
-        writeTestResult("T106", "nextElement no delimiter", true,
-                testNextElement(new BasicTokenizer("abcd"), "abcd"));
+        evaluateTestCase("T106", "nextElement no delimiter", true,
+                () -> testNextElement(new BasicTokenizer("abcd"), "abcd"));
 
-        writeTestResult("T105", "nextElement null delimiter", false,
-                testNextElement(new BasicTokenizer("a b c d", null), ""));
+        evaluateTestCase("T105", "nextElement null delimiter", true, true,
+                () -> testNextElement(new BasicTokenizer("a b c d", null), ""));
 
         //Ad Hoc test will need a new TestCase for each scenario
-        writeTestResult("TXXX", "Normal text", true,
-                BasicTokenizerTester.testTokenIteration(
+        evaluateTestCase("TXXX", "Normal text", true,
+                () -> BasicTokenizerTester.testTokenIteration(
                         new BasicTokenizer("a b c d"),
                         new ArrayList<>(Arrays.asList("a", "b", "c", "d"))));
 
-        writeTestResult("TXXX", "Normal text, normal delim, returnDelims=true", true,
-                BasicTokenizerTester.testTokenIteration(
+        evaluateTestCase("TXXX", "Normal text, normal delim, returnDelims=true", true,
+                () -> BasicTokenizerTester.testTokenIteration(
                         new BasicTokenizer("a,b,c,d", ",", true),
                         new ArrayList<>(Arrays.asList("a", ",", "b", ",", "c", ",", "d"))));
 
-        writeTestResult("TXXX", "Normal text, normal delim, returnDelims=true", true,
-                BasicTokenizerTester.testTokenIteration(
+        evaluateTestCase("TXXX", "Normal text, normal delim, returnDelims=true",
+                true,
+                () -> BasicTokenizerTester.testTokenIteration(
                         new BasicTokenizer("a,b;c,d", ",;", true),
-                        new ArrayList<>(Arrays.asList("a", ",", "b", ";", "c", ",", "d"))));
-
+                        new ArrayList<>(Arrays.asList("a", ",", "b", ";", "c", ",", "d")))
+        );
     } // end main
 
     /**
-     * Write test result
-     *
+     * Evaluate the test case and write results
+     * @param <T>
      * @param name
+     * @param description
      * @param expected
-     * @param actual
+     * @param testCase 
      */
-    private static void writeTestResult(String name, String description, Boolean expected, Boolean actual) {
-        //todo remove the PASSED FAILED prefix before turnin
+    private static <T> void evaluateTestCase(String name, String description, T expected, Callable<T> testCase) {
+        BasicTokenizerTester.evaluateTestCase(name, description, false, expected, testCase);
+    }
 
+    /**
+     * Evaluate the test case and write the results
+     * @param <T>
+     * @param name
+     * @param description
+     * @param expectedException
+     * @param expected
+     * @param testCase 
+     */
+    private static <T> void evaluateTestCase(String name, String description, Boolean expectedException, T expected, Callable<T> testCase) {
+        T result = null;
+        Boolean passed = false;
+        String error = "";
+
+        //execute the call
+        try {
+            result = testCase.call();
+            if (expectedException) {
+                error = " Expected exception. Error: none";
+                passed = false;
+            }
+        } catch (Exception ex) {
+            if (expectedException) {
+                error = " Expected exception. Error: " + ex.toString();
+                passed = true;
+            } else {
+                error = " Error: " + ex.toString();
+                passed = false;
+            }
+        }
+
+        //evaluate result if no exception expected
+        if (passed == false) {
+            if (expected == null && result == null) {
+                passed = true;
+            } else if (expected == null && result != null) {
+                passed = false;
+            } else {
+                passed = (expected.equals(result));
+            }
+        }
+
+        //report result
         if (useSubmissionFormat) {
-            if (expected == actual) {
+            if (passed) {
                 System.out.println("Test " + name + " passed. ");
             } else {
                 System.out.println("Test " + name + " FAILED. ");
             }
         } else {
-            if (expected == actual) {
-                System.out.println("Test " + name + " passed. " + ((!expected) ? "(Negative Test) " : "") + description);
+            if (passed) {
+                System.out.println("Test " + name + " passed. " + description + error);
             } else {
-                System.out.println("Test " + name + " FAILED. " + ((!expected) ? "(Negative Test) " : "") + description);
+                System.out.println("Test " + name + " FAILED. " + description + error);
             }
 
         }
@@ -193,11 +238,7 @@ public class BasicTokenizerTester {
      * @return
      */
     private static Boolean testConstructor(String str) {
-        try {
-            return BasicTokenizer.class.isInstance(new BasicTokenizer(str));
-        } catch (Exception ex) {
-            return false;
-        }
+        return BasicTokenizer.class.isInstance(new BasicTokenizer(str));
     }
 
     /**
@@ -208,11 +249,7 @@ public class BasicTokenizerTester {
      * @return
      */
     private static Boolean testConstructor(String str, String delim) {
-        try {
-            return BasicTokenizer.class.isInstance(new BasicTokenizer(str, delim));
-        } catch (Exception ex) {
-            return false;
-        }
+        return BasicTokenizer.class.isInstance(new BasicTokenizer(str, delim));
     }
 
     /**
@@ -224,11 +261,7 @@ public class BasicTokenizerTester {
      * @return
      */
     private static Boolean testConstructor(String str, String delim, Boolean returnDelims) {
-        try {
-            return BasicTokenizer.class.isInstance(new BasicTokenizer(str, delim, returnDelims));
-        } catch (Exception ex) {
-            return false;
-        }
+        return BasicTokenizer.class.isInstance(new BasicTokenizer(str, delim, returnDelims));
     }
 
     /**
@@ -239,11 +272,7 @@ public class BasicTokenizerTester {
      * @return
      */
     private static Boolean testCountTokens(BasicTokenizer basicTokenizer, int expected) {
-        try {
-            return expected == basicTokenizer.countTokens();
-        } catch (Exception ex) {
-            return false;
-        }
+        return expected == basicTokenizer.countTokens();
     }
 
     /**
@@ -254,11 +283,7 @@ public class BasicTokenizerTester {
      * @return
      */
     private static Boolean testHasMoreTokens(BasicTokenizer basicTokenizer, Boolean expected) {
-        try {
-            return expected == basicTokenizer.hasMoreTokens();
-        } catch (Exception ex) {
-            return false;
-        }
+        return expected == basicTokenizer.hasMoreTokens();
     }
 
     /**
@@ -269,11 +294,7 @@ public class BasicTokenizerTester {
      * @return
      */
     private static Boolean testNextToken(BasicTokenizer basicTokenizer, String expected) {
-        try {
-            return expected.equals(basicTokenizer.nextToken());
-        } catch (Exception ex) {
-            return false;
-        }
+        return expected.equals(basicTokenizer.nextToken());
     }
 
     /**
@@ -285,11 +306,7 @@ public class BasicTokenizerTester {
      * @return
      */
     private static Boolean testNextTokenDelim(BasicTokenizer basicTokenizer, String delim, String expected) {
-        try {
-            return expected.equals(basicTokenizer.nextToken(delim));
-        } catch (Exception ex) {
-            return false;
-        }
+        return expected.equals(basicTokenizer.nextToken(delim));
     }
 
     /**
@@ -300,11 +317,7 @@ public class BasicTokenizerTester {
      * @return
      */
     private static Boolean testHasMoreElements(BasicTokenizer basicTokenizer, Boolean expected) {
-        try {
-            return expected == basicTokenizer.hasMoreElements();
-        } catch (Exception ex) {
-            return false;
-        }
+        return expected == basicTokenizer.hasMoreElements();
     }
 
     /**
@@ -315,11 +328,7 @@ public class BasicTokenizerTester {
      * @return
      */
     private static Boolean testNextElement(BasicTokenizer basicTokenizer, String expected) {
-        try {
-            return expected.equals(basicTokenizer.nextElement());
-        } catch (Exception ex) {
-            return false;
-        }
+        return expected.equals(basicTokenizer.nextElement());
     }
 
     /**
@@ -332,29 +341,25 @@ public class BasicTokenizerTester {
      * @throws Exception
      */
     private static Boolean testTokenIteration(BasicTokenizer basicTokenizer, List<String> expected) {
-        try {
+        Integer remaining = expected.size();
+        for (String exp : expected) {
 
-            Integer remaining = expected.size();
-            for (String exp : expected) {
-
-                if (!basicTokenizer.hasMoreTokens()) {
-                    return false;
-                }
-
-                if (remaining != basicTokenizer.countTokens()) {
-                    return false;
-                }
-
-                String token = basicTokenizer.nextToken();
-                if (!exp.equals(token)) {
-                    return false;
-                }
-                remaining--;
+            if (!basicTokenizer.hasMoreTokens()) {
+                return false;
             }
-            return true;
-        } catch (Exception ex) {
-            return false;
+
+            if (remaining != basicTokenizer.countTokens()) {
+                return false;
+            }
+
+            String token = basicTokenizer.nextToken();
+            if (!exp.equals(token)) {
+                return false;
+            }
+            remaining--;
         }
+        return true;
+
     }
 
     /**
@@ -367,25 +372,20 @@ public class BasicTokenizerTester {
      * @throws Exception
      */
     private static Boolean testElementIteration(BasicTokenizer basicTokenizer, List<Object> expected) {
-        try {
+        Integer remaining = expected.size();
+        for (Object exp : expected) {
 
-            Integer remaining = expected.size();
-            for (Object exp : expected) {
-
-                if (!basicTokenizer.hasMoreElements()) {
-                    return false;
-                }
-
-                Object token = basicTokenizer.nextElement();
-                if (!exp.equals(token)) {
-                    return false;
-                }
-                remaining--;
+            if (!basicTokenizer.hasMoreElements()) {
+                return false;
             }
-            return true;
-        } catch (Exception ex) {
-            return false;
+
+            Object token = basicTokenizer.nextElement();
+            if (!exp.equals(token)) {
+                return false;
+            }
+            remaining--;
         }
+        return true;
     }
 
 } // end class BasicTokenizerTester
