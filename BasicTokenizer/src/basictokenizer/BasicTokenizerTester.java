@@ -56,19 +56,19 @@ public class BasicTokenizerTester {
         //etc....
 
         //Test HasMoreTokens
-        testCases.add(new TestHasMoreTokens("TC011 -- hasMoreTokens normal.", new BasicTokenizer("a b c d"), true));
-        testCases.add(new TestHasMoreTokens("TC012 -- hasMoreTokens delimiter changed.", new BasicTokenizer("abcd"),  true));
-        errCases.add(new TestHasMoreTokens("TC013 -- hasMoreTokens null delimiter. Throws exception.", new BasicTokenizer("a b c d", null), true));
+        testCases.add(new TestHasMoreTokens("TC051 -- hasMoreTokens normal.", new BasicTokenizer("a b c d"), true));
+        testCases.add(new TestHasMoreTokens("TC052 -- hasMoreTokens delimiter changed.", new BasicTokenizer("abcd"),  true));
+        errCases.add(new TestHasMoreTokens("TC053 -- hasMoreTokens null delimiter. Throws exception.", new BasicTokenizer("a b c d", null), true));
         
         //Test NextToken
-        testCases.add(new TestNextToken("TC015 -- nextToken normal.", new BasicTokenizer("a b c d"), "a b c d"));
-        testCases.add(new TestNextToken("TC016 -- nextToken no delimiter.", new BasicTokenizer("abcd"), "abcd"));
-        errCases.add(new TestNextToken("TC017 -- nextToken  null delimiter. Throws exception.", new BasicTokenizer("a b c d", null), null));
+        testCases.add(new TestNextToken("TC055 -- nextToken normal.", new BasicTokenizer("a b c d"), "a b c d"));
+        testCases.add(new TestNextToken("TC056 -- nextToken no delimiter.", new BasicTokenizer("abcd"), "abcd"));
+        errCases.add(new TestNextToken("TC057 -- nextToken  null delimiter. Throws exception.", new BasicTokenizer("a b c d", null), null));
         
         //Test NextToken(delim)
-        testCases.add(new TestNextTokenDelim("TC019 -- nextTokenDelim normal with space as a delimiter.", new BasicTokenizer("a b c d"), "a b c d", " "));
-        testCases.add(new TestNextTokenDelim("TC020 -- nextTokenDelim no delimiter.", new BasicTokenizer("abcd"), "abcd", ""));
-        errCases.add(new TestNextTokenDelim("TC021 -- nextTokenDelim  null delimiter. Throws exception.", new BasicTokenizer("a b c d", null), "a b c d", null));
+        testCases.add(new TestNextTokenDelim("TC059 -- nextTokenDelim normal with space as a delimiter.", new BasicTokenizer("a b c d"), "a b c d", " "));
+        testCases.add(new TestNextTokenDelim("TC060 -- nextTokenDelim no delimiter.", new BasicTokenizer("abcd"), "abcd", ""));
+        errCases.add(new TestNextTokenDelim("TC061 -- nextTokenDelim  null delimiter. Throws exception.", new BasicTokenizer("a b c d", null), "a b c d", null));
         
         
         //Test NextToken(delim)
