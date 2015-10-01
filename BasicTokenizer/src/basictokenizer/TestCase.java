@@ -22,7 +22,8 @@ public interface TestCase {
     /**
      * Execute the test
      * @return 
+     * @throws java.lang.Exception 
      */
-    Boolean execute();
+    Boolean execute() throws Exception;
     
 }

@@ -8,6 +8,7 @@
 package basictokenizer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -37,6 +38,21 @@ public class BasicTokenizerTester {
         List<TestCase> errCases = new ArrayList<TestCase>();
 
         //TODO We need the Decision table to help us narrow down the possibilities!
+        
+        testCases.add(new TestIteration(
+                "Test iterations", 
+                new BasicTokenizer("a,b,c,d", ",", false), 
+                new ArrayList<>(Arrays.asList("a", "b", "c", "d"))));
+        
+        testCases.add(new TestIteration(
+                "Test iterations 2", 
+                new BasicTokenizer("a,b,c,d", ",", true), 
+                new ArrayList<>(Arrays.asList("a", ",", "b", ",", "c", ",", "d"))));
+        
+        testCases.add(new TestIteration(
+                "Test iterations 3", 
+                new BasicTokenizer("a,b;c,d", ",;", true), 
+                new ArrayList<>(Arrays.asList("a", ",", "b", ";", "c", ",", "d"))));
         
         //Test Constructors        
         testCases.add(new TestConstructor1("T001 -- Constructor 1 valid text.", "a b c d"));
