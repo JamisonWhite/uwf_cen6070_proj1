@@ -29,7 +29,7 @@ public class TestNextElement implements TestCase {
     public TestNextElement(String name, BasicTokenizer basicTokenizer, Object expected) {
         this.name = name;
         this.basicTokenizer = basicTokenizer;
-        this.expected = expected;        
+        this.expected = expected;
     }
     
     @Override
