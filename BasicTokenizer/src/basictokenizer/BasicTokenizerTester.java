@@ -197,25 +197,25 @@ public class BasicTokenizerTester {
                 () -> (new BasicTokenizer("a b,c d", " ", true)).nextToken(","));
 
         //Ad Hoc test will need a new TestCase for each scenario
-        evaluateTestCase("TXXX", "R11 Iterate delimited text",
+        evaluateTestCase("T200", "R11 Iterate delimited text",
                 true,
                 () -> BasicTokenizerTester.testTokenIteration(
                         new BasicTokenizer("a,b,c,d", ","),
                         new ArrayList<>(Arrays.asList("a", "b", "c", "d"))));
 
-        evaluateTestCase("TXXX", "R11 Iterate delimited text",
+        evaluateTestCase("T201", "R11 Iterate delimited text",
                 true,
                 () -> BasicTokenizerTester.testTokenIteration(
                         new BasicTokenizer(",a,b,c,d", ","),
                         new ArrayList<>(Arrays.asList("", "a", "b", "c", "d"))));
 
-        evaluateTestCase("TXXX", "R12 Iterate delimited text, valid delimiter, returnDelims=true",
+        evaluateTestCase("T202", "R12 Iterate delimited text, valid delimiter, returnDelims=true",
                 true,
                 () -> BasicTokenizerTester.testTokenIteration(
                         new BasicTokenizer("a,b,c,d", ",", true),
                         new ArrayList<>(Arrays.asList("a", ",", "b", ",", "c", ",", "d"))));
 
-        evaluateTestCase("TXXX", "R12 Iterate delimited text, valid delimiter with multiple characters, returnDelims=true",
+        evaluateTestCase("T203", "R12 Iterate delimited text, valid delimiter with multiple characters, returnDelims=true",
                 true,
                 () -> BasicTokenizerTester.testTokenIteration(
                         new BasicTokenizer("a,b;c,d", ",;", true),
