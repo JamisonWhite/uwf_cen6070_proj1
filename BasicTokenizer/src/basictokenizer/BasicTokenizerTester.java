@@ -117,9 +117,15 @@ public class BasicTokenizerTester {
         writeTestResult("T151", "NextTokenDelim empty text", true, 
                 testNextTokenDelim(new BasicTokenizer("", ""), "", ""));
 
-        //Test HasMoreElements
-        
-        //Test NextElement
+//        //Test HasMoreElements
+//        testCases.add(new TestHasMoreElements("T101 -- hasMoreTokens normal.", new BasicTokenizer("a b c d"), true));
+//        testCases.add(new TestHasMoreElements("T102 -- hasMoreTokens delimiter changed.", new BasicTokenizer("abcd"),  true));
+//        errCases.add(new TestHasMoreElements("T103 -- hasMoreTokens null delimiter. Throws exception.", new BasicTokenizer("a b c d", null), true));
+//                
+//        //Test NextElement
+//        testCases.add(new TestNextElement("T105 -- nextToken normal.", new BasicTokenizer("a b c d"), "a b c d"));
+//        testCases.add(new TestNextElement("T106 -- nextToken no delimiter.", new BasicTokenizer("abcd"), "abcd"));
+//        errCases.add(new TestNextElement("T107 -- nextToken  null delimiter. Throws exception.", new BasicTokenizer("a b c d", null), null));
         
         //Ad Hoc test will need a new TestCase for each scenario
         writeTestResult("TXXX", "Normal text", true,
