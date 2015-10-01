@@ -117,11 +117,31 @@ public class BasicTokenizerTester {
         writeTestResult("T151", "NextTokenDelim empty text", true, 
                 testNextTokenDelim(new BasicTokenizer("", ""), "", ""));
 
+        
+        //Test HasMoreElements
+        writeTestResult("T101", "hasMoreTokens normal", true, 
+                testHasMoreElements(new BasicTokenizer("a b c d"), true));
+        
+        writeTestResult("T102", "hasMoreTokens delimiter not in text", true, 
+                testHasMoreElements(new BasicTokenizer("abcd"), true));
+        
+        writeTestResult("T103", "hasMoreTokens null delimiter.", false, 
+                testHasMoreElements(new BasicTokenizer("a b c d", null), true));
 //        //Test HasMoreElements
 //        testCases.add(new TestHasMoreElements("T101 -- hasMoreTokens normal.", new BasicTokenizer("a b c d"), true));
 //        testCases.add(new TestHasMoreElements("T102 -- hasMoreTokens delimiter changed.", new BasicTokenizer("abcd"),  true));
 //        errCases.add(new TestHasMoreElements("T103 -- hasMoreTokens null delimiter. Throws exception.", new BasicTokenizer("a b c d", null), true));
-//                
+
+        
+        //Test HasMoreElements
+        writeTestResult("T105", "nextElement normal", true, 
+                testNextElement(new BasicTokenizer("a b c d"), "a"));
+        
+        writeTestResult("T106", "nextElement no delimiter", true, 
+                testNextElement(new BasicTokenizer("abcd"), "abcd"));
+        
+        writeTestResult("T105", "nextElement null delimiter", false, 
+                testNextElement(new BasicTokenizer("a b c d", null), ""));
 //        //Test NextElement
 //        testCases.add(new TestNextElement("T105 -- nextToken normal.", new BasicTokenizer("a b c d"), "a b c d"));
 //        testCases.add(new TestNextElement("T106 -- nextToken no delimiter.", new BasicTokenizer("abcd"), "abcd"));
