@@ -255,11 +255,12 @@ public class BasicTokenizerTester {
             } else {
                 passed = (expected.equals(testCaseResult));
             }
-            if (!passed) {
+            if (passed) {
+                result = " Expected: " + expected;
+            } else {
                 result = " Expected: " + expected + " Actual: " + testCaseResult;
             }
         }
-
         writeTestCaseResult(passed, name, description, result);
     }
 
@@ -282,7 +283,9 @@ public class BasicTokenizerTester {
             result = " Expected: " + exceptionType.toString() + " Actual: None";
         } catch (Exception ex) {
             passed = exceptionType.isInstance(ex);
-            if (!passed) {
+            if (passed) {
+                result = " Expected: " + exceptionType.toString() ;
+            } else {
                 result = " Expected: " + exceptionType.toString() + " Actual: " + ex.toString();
             }
         }
@@ -325,8 +328,10 @@ public class BasicTokenizerTester {
      * @param str
      * @return
      */
-    private static Boolean testConstructor(String str) {
-        return BasicTokenizer.class.isInstance(new BasicTokenizer(str));
+    private static Boolean
+            testConstructor(String str) {
+        return BasicTokenizer.class
+                .isInstance(new BasicTokenizer(str));
     }
 
     /**
@@ -336,8 +341,10 @@ public class BasicTokenizerTester {
      * @param delim
      * @return
      */
-    private static Boolean testConstructor(String str, String delim) {
-        return BasicTokenizer.class.isInstance(new BasicTokenizer(str, delim));
+    private static Boolean
+            testConstructor(String str, String delim) {
+        return BasicTokenizer.class
+                .isInstance(new BasicTokenizer(str, delim));
     }
 
     /**
@@ -348,10 +355,11 @@ public class BasicTokenizerTester {
      * @param returnDelims
      * @return
      */
-    private static Boolean testConstructor(String str, String delim, Boolean returnDelims) {
-        return BasicTokenizer.class.isInstance(new BasicTokenizer(str, delim, returnDelims));
+    private static Boolean
+            testConstructor(String str, String delim, Boolean returnDelims) {
+        return BasicTokenizer.class
+                .isInstance(new BasicTokenizer(str, delim, returnDelims));
     }
-
 
     /**
      * Does nextToken() == expected and not fail TODO REPLACE WITH LAMBDAS
@@ -363,7 +371,6 @@ public class BasicTokenizerTester {
     private static Boolean testNextToken(BasicTokenizer basicTokenizer, String expected) {
         return expected.equals(basicTokenizer.nextToken());
     }
-
 
     /**
      * Does hasMoreElements() == expected and not fail TODO REPLACE WITH LAMBDAS
