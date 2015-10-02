@@ -39,39 +39,39 @@ public class BasicTokenizerTester {
         //Test Constructors        
         evaluateTestCase("TXXX", "Constructor 1 valid text.",
                 true,
-                () -> new BasicTokenizer("a b c d"));
+                () -> (new BasicTokenizer("a b c d")) != null);
 
         evaluateTestCase("TXXX", "Constructor 1 empty text.",
                 true,
-                () -> testConstructor(""));
+                () -> (new BasicTokenizer("")) != null);
 
         evaluateTestCaseException("TXXX", "Constructor 1 null text.",
                 NullPointerException.class,
-                () -> testConstructor(null));
+                () -> (new BasicTokenizer(null)) != null);
 
         evaluateTestCase("TXXX", "Constructor 2 valid text and valid delim.",
                 true,
-                () -> testConstructor("a b c d", " "));
+                () -> (new BasicTokenizer("a b c d", " ")) != null);
 
         evaluateTestCase("TXXX", "Constructor 2 valid text and empty delim.",
                 true,
-                () -> testConstructor("a b c d", ""));
+                () -> (new BasicTokenizer("a b c d", "")) != null);
 
         evaluateTestCase("TXXX", "Constructor 2 valid text and null delim.",
                 true,
-                () -> testConstructor("a b c d", null));
+                () -> (new BasicTokenizer("a b c d", null)) != null);
 
         evaluateTestCase("TXXX", "Constructor 2 valid text and valid delim and true.",
                 true,
-                () -> testConstructor("a b c d", " ", true));
+                () -> (new BasicTokenizer("a b c d", " ", true)) != null);
 
         evaluateTestCase("TXXX", "Constructor 2 valid text and valid delim and false.",
                 true,
-                () -> testConstructor("a b c d", " ", false));
+                () -> (new BasicTokenizer("a b c d", " ", false)) != null);
 
         evaluateTestCase("TXXX", "Constructor 2 valid text and non-unique delim.",
                 true,
-                () -> testConstructor("a b c d", "   ,,,,,,"));
+                () -> (new BasicTokenizer("a b c d", "       ")) != null);
 
         //Test CountTokens        
         evaluateTestCase("TXXX", "countTokens normal.",
@@ -128,28 +128,28 @@ public class BasicTokenizerTester {
         //Test HasMoreElements
         evaluateTestCase("T101", "hasMoreTokens normal",
                 true,
-                () -> testHasMoreElements(new BasicTokenizer("a b c d"), true));
+                () -> (new BasicTokenizer("a b c d")).hasMoreElements());
 
         evaluateTestCase("T102", "hasMoreTokens delimiter not in text",
                 true,
-                () -> testHasMoreElements(new BasicTokenizer("abcd"), true));
+                () -> (new BasicTokenizer("abcd")).hasMoreElements());
 
-        evaluateTestCase("T103", "hasMoreTokens null delimiter.",
-                false,
-                () -> testHasMoreElements(new BasicTokenizer("a b c d", null), true));
+        evaluateTestCaseException("T103", "hasMoreTokens null delimiter.",
+                NullPointerException.class,
+                () -> (new BasicTokenizer("a b c d", null)).hasMoreElements());
 
         //Test NextElement
         evaluateTestCase("T105", "nextElement normal",
-                true,
-                () -> testNextElement(new BasicTokenizer("a b c d"), "a"));
+                "a",
+                () -> (new BasicTokenizer("a b c d")).nextElement());
 
         evaluateTestCase("T106", "nextElement no delimiter",
-                true,
-                () -> testNextElement(new BasicTokenizer("abcd"), "abcd"));
+                "abcd",
+                () -> (new BasicTokenizer("abcd")).nextElement());
 
         evaluateTestCaseException("T105", "nextElement null delimiter",
                 NullPointerException.class,
-                () -> testNextElement(new BasicTokenizer("a b c d", null), ""));
+                () -> (new BasicTokenizer("a b c d", null)).nextElement());
 
         //Test NextToken(delim)        
         evaluateTestCaseException("T151", "R2 NextTokenDelim empty string, null delim.",
@@ -322,67 +322,6 @@ public class BasicTokenizerTester {
      */
     private static Boolean useSubmissionFormat;
 
-    /**
-     * Test constructor
-     *
-     * @param str
-     * @return
-     */
-    private static Boolean
-            testConstructor(String str) {
-        return BasicTokenizer.class
-                .isInstance(new BasicTokenizer(str));
-    }
-
-    /**
-     * Test constructor
-     *
-     * @param str
-     * @param delim
-     * @return
-     */
-    private static Boolean
-            testConstructor(String str, String delim) {
-        return BasicTokenizer.class
-                .isInstance(new BasicTokenizer(str, delim));
-    }
-
-    /**
-     * Test Constructor
-     *
-     * @param str
-     * @param delim
-     * @param returnDelims
-     * @return
-     */
-    private static Boolean
-            testConstructor(String str, String delim, Boolean returnDelims) {
-        return BasicTokenizer.class
-                .isInstance(new BasicTokenizer(str, delim, returnDelims));
-    }
-
-
-    /**
-     * Does hasMoreElements() == expected and not fail TODO REPLACE WITH LAMBDAS
-     *
-     * @param basicTokenizer
-     * @param expected
-     * @return
-     */
-    private static Boolean testHasMoreElements(BasicTokenizer basicTokenizer, Boolean expected) {
-        return expected == basicTokenizer.hasMoreElements();
-    }
-
-    /**
-     * Does nextToken() == expected and not fail TODO REPLACE WITH LAMBDAS
-     *
-     * @param basicTokenizer
-     * @param expected
-     * @return
-     */
-    private static Boolean testNextElement(BasicTokenizer basicTokenizer, String expected) {
-        return expected.equals(basicTokenizer.nextElement());
-    }
 
     /**
      * Token iteration test will use hasMoreTokens, countTokens, and nextToken
