@@ -114,16 +114,16 @@ public class BasicTokenizerTester {
 
         //Test NextToken
         evaluateTestCase("T055", "nextToken normal.",
-                true,
-                () -> testNextToken(new BasicTokenizer("a b c d"), "a"));
+                "a",
+                () -> (new BasicTokenizer("a b c d")).nextToken());
 
         evaluateTestCase("T056", "nextToken no delimiter.",
-                true,
-                () -> testNextToken(new BasicTokenizer("abcd"), "abcd"));
+                "abcd",
+                () -> (new BasicTokenizer("abcd")).nextToken());
 
-        evaluateTestCase("T057", "nextToken  null delimiter. Throws exception.",
-                false,
-                () -> testNextToken(new BasicTokenizer("a b c d", null), null));
+        evaluateTestCaseException("T057", "nextToken  null delimiter.",
+                NullPointerException.class,
+                () -> (new BasicTokenizer("a b c d", null)).nextToken());
 
         //Test HasMoreElements
         evaluateTestCase("T101", "hasMoreTokens normal",
@@ -361,16 +361,6 @@ public class BasicTokenizerTester {
                 .isInstance(new BasicTokenizer(str, delim, returnDelims));
     }
 
-    /**
-     * Does nextToken() == expected and not fail TODO REPLACE WITH LAMBDAS
-     *
-     * @param basicTokenizer
-     * @param expected
-     * @return
-     */
-    private static Boolean testNextToken(BasicTokenizer basicTokenizer, String expected) {
-        return expected.equals(basicTokenizer.nextToken());
-    }
 
     /**
      * Does hasMoreElements() == expected and not fail TODO REPLACE WITH LAMBDAS
@@ -421,7 +411,7 @@ public class BasicTokenizerTester {
             }
             remaining--;
         }
-        return true;
+        return !basicTokenizer.hasMoreTokens();
 
     }
 
@@ -448,7 +438,7 @@ public class BasicTokenizerTester {
             }
             remaining--;
         }
-        return true;
+        return !basicTokenizer.hasMoreElements();
     }
 
 } // end class BasicTokenizerTester
