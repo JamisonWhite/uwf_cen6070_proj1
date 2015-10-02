@@ -197,30 +197,74 @@ public class BasicTokenizerTester {
                 () -> (new BasicTokenizer("a b,c d", " ", true)).nextToken(","));
 
         //Ad Hoc test will need a new TestCase for each scenario
-        evaluateTestCase("T200", "R11 Iterate delimited text",
+        evaluateTestCase("T200", "R11 Iterate tokens delimited text",
                 true,
                 () -> BasicTokenizerTester.testTokenIteration(
                         new BasicTokenizer("a,b,c,d", ","),
                         new ArrayList<>(Arrays.asList("a", "b", "c", "d"))));
-
-        evaluateTestCase("T201", "R11 Iterate delimited text",
+        
+        evaluateTestCase("T201", "R11 Iterate tokens delimited text with empty token at end",
                 true,
                 () -> BasicTokenizerTester.testTokenIteration(
-                        new BasicTokenizer(",a,b,c,d", ","),
-                        new ArrayList<>(Arrays.asList("", "a", "b", "c", "d"))));
-
-        evaluateTestCase("T202", "R12 Iterate delimited text, valid delimiter, returnDelims=true",
+                        new BasicTokenizer("a,b,c,d,", ","),
+                        new ArrayList<>(Arrays.asList("a", "b", "c", "d"))));
+        
+        evaluateTestCase("T202", "R11 Iterate tokens delimited text with consecutive delimiters",
+                true,
+                () -> BasicTokenizerTester.testTokenIteration(
+                        new BasicTokenizer("a,b,,c,d", ","),
+                        new ArrayList<>(Arrays.asList("a", "b", "c", "d"))));
+        
+        
+        evaluateTestCase("T203", "R12 Iterate tokens delimited text with delimiters as tokens",
                 true,
                 () -> BasicTokenizerTester.testTokenIteration(
                         new BasicTokenizer("a,b,c,d", ",", true),
                         new ArrayList<>(Arrays.asList("a", ",", "b", ",", "c", ",", "d"))));
-
-        evaluateTestCase("T203", "R12 Iterate delimited text, valid delimiter with multiple characters, returnDelims=true",
+        
+                
+        evaluateTestCase("T204", "R12 Iterate tokens delimited text with multiple characters and delimiters as tokens",
                 true,
                 () -> BasicTokenizerTester.testTokenIteration(
                         new BasicTokenizer("a,b;c,d", ",;", true),
-                        new ArrayList<>(Arrays.asList("a", ",", "b", ";", "c", ",", "d")))
-        );
+                        new ArrayList<>(Arrays.asList("a", ",", "b", ";", "c", ",", "d"))));
+        
+        
+        
+        evaluateTestCase("T205", "R11 Iterate elements delimited text",
+                true,
+                () -> BasicTokenizerTester.testElementIteration(
+                        new BasicTokenizer("a,b,c,d", ","),
+                        new ArrayList<>(Arrays.asList("a", "b", "c", "d"))));
+        
+        evaluateTestCase("T206", "R11 Iterate elements delimited text with empty token at end",
+                true,
+                () -> BasicTokenizerTester.testElementIteration(
+                        new BasicTokenizer("a,b,c,d,", ","),
+                        new ArrayList<>(Arrays.asList("a", "b", "c", "d"))));
+        
+        evaluateTestCase("T207", "R11 Iterate elements delimited text with consecutive delimiters",
+                true,
+                () -> BasicTokenizerTester.testElementIteration(
+                        new BasicTokenizer("a,b,,c,d", ","),
+                        new ArrayList<>(Arrays.asList("a", "b", "c", "d"))));
+        
+        
+        evaluateTestCase("T208", "R12 Iterate elements delimited text with delimiters as tokens",
+                true,
+                () -> BasicTokenizerTester.testElementIteration(
+                        new BasicTokenizer("a,b,c,d", ",", true),
+                        new ArrayList<>(Arrays.asList("a", ",", "b", ",", "c", ",", "d"))));
+        
+                
+        evaluateTestCase("T209", "R12 Iterate elements delimited text with multiple characters and delimiters as tokens",
+                true,
+                () -> BasicTokenizerTester.testElementIteration(
+                        new BasicTokenizer("a,b;c,d", ",;", true),
+                        new ArrayList<>(Arrays.asList("a", ",", "b", ";", "c", ",", "d"))));
+        
+        
+        
     } // end main
 
     /**
