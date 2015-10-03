@@ -229,6 +229,7 @@ public class BasicTokenizerTester {
                 NoSuchElementException.class,
                 () -> (new BasicTokenizer("")).nextToken());
         
+        // <editor-fold defaultstate="collapsed" desc="Test HasMoreElements BVT">
         //Test HasMoreElements BVT
         evaluateTestCase("T101", "hasMoreElements normal",
                 true,
@@ -241,6 +242,7 @@ public class BasicTokenizerTester {
         evaluateTestCaseException("T103", "hasMoreElements null delimiter.",
                 NullPointerException.class,
                 () -> (new BasicTokenizer("a b c d", null)).hasMoreElements());
+        // </editor-fold>
 
         //Test NextElement BVT
         evaluateTestCase("T105", "nextElement normal",
