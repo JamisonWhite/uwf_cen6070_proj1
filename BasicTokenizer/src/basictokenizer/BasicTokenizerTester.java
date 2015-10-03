@@ -93,7 +93,7 @@ public class BasicTokenizerTester {
                 () -> (new BasicTokenizer("a b c d", "", true)) != null);
         
         evaluateTestCase("T014", "Constructor 3 inside boundary string, one character delimiter, return delimiter.",
-                true,
+                true,.
                 () -> (new BasicTokenizer("a b c d", "b", true)) != null);
         
         evaluateTestCase("T015", "Constructor 3 inside boundary string, inside boundary delimiter, return delimiter.",
@@ -165,8 +165,8 @@ public class BasicTokenizerTester {
                 NullPointerException.class,
                 () -> (new BasicTokenizer("a b c d", null)).nextToken());
         
-        evaluateTestCaseException("T058", "nextToken  empty text.",
-                NullPointerException.class,
+        evaluateTestCaseException("T058", "nextToken empty text.",
+                NoSuchElementException.class,
                 () -> (new BasicTokenizer("")).nextToken());
         
         //Test HasMoreElements
