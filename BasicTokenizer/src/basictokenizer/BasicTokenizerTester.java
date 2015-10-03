@@ -36,6 +36,7 @@ public class BasicTokenizerTester {
         //TODO We need the Decision table to help us narrow down the possibilities!
         useSubmissionFormat = false;
 
+        // <editor-fold defaultstate="collapsed" desc="Test Constructors BVT">
         //Test Constructors
         evaluateTestCaseException("T001", "Constructor 1 null text.",
                 NullPointerException.class,
@@ -112,7 +113,9 @@ public class BasicTokenizerTester {
                 true,
                 () -> (new BasicTokenizer("c", " , \\t\\n\\r\\f", true)) != null);
         
+        // </editor-fold>
 
+        // <editor-fold defaultstate="collapsed" desc="Test CountTokens">
         //Test CountTokens
         evaluateTestCase("T019", "countTokens R4.",
                 0,
@@ -150,6 +153,9 @@ public class BasicTokenizerTester {
                 7,
                 () -> (new BasicTokenizer("a b c d", " , \\t\\n\\r\\f", true)).countTokens());
 
+        // </editor-fold>
+
+        // <editor-fold defaultstate="collapsed" desc="Test HasMoreTokens Decision Table">
         //Test HasMoreTokens
         evaluateTestCaseException("T040", "R2 hasMoreTokens empty string, null delim.",
                 NullPointerException.class,
@@ -195,6 +201,9 @@ public class BasicTokenizerTester {
                 true,
                 () -> (new BasicTokenizer("a b,c d", " ", true)).hasMoreElements());
 
+        // </editor-fold>
+
+        // <editor-fold defaultstate="collapsed" desc="Test HasMoreTokens BVT">
         evaluateTestCase("T051", "hasMoreTokens normal.",
                 true,
                 () -> (new BasicTokenizer("a b c d")).hasMoreTokens());
@@ -211,7 +220,9 @@ public class BasicTokenizerTester {
                 NullPointerException.class,
                 () -> (new BasicTokenizer("a b c d", null)).hasMoreTokens());
         
-        
+        // </editor-fold>
+
+        // <editor-fold defaultstate="collapsed" desc="Test NextToken BVT">
         //Test NextToken
         evaluateTestCase("T055", "nextToken normal.",
                 "a",
@@ -229,6 +240,56 @@ public class BasicTokenizerTester {
                 NoSuchElementException.class,
                 () -> (new BasicTokenizer("")).nextToken());
         
+        // </editor-fold>
+
+        // <editor-fold defaultstate="collapsed" desc="Test NextToken Decision Table">
+        //Test NextToken Decision Table
+        evaluateTestCaseException("T059", "R2 nextToken empty string, null delim.",
+                NullPointerException.class,
+                () -> (new BasicTokenizer("", null)).nextToken());
+
+        evaluateTestCaseException("T060", "R3 nextToken empty string, empty delim.",
+                NoSuchElementException.class,
+                () -> (new BasicTokenizer("", "")).nextToken());
+
+        evaluateTestCaseException("T061", "R4 nextToken empty string, valid delim.",
+                NoSuchElementException.class,
+                () -> (new BasicTokenizer("", ";")).nextToken());
+
+        evaluateTestCaseException("T062", "R5 nextToken non-delimited string, null delim.",
+                NullPointerException.class,
+                () -> (new BasicTokenizer("abcd", null)).nextToken());
+
+        evaluateTestCase("T063", "R6 nextToken non-delimited string, empty delim.",
+                "abcd",
+                () -> (new BasicTokenizer("abcd", "")).nextToken());
+
+        evaluateTestCase("T064", "R7 nextToken non-delimited string, valid delim, delims are not tokens.",
+                "abcd",
+                () -> (new BasicTokenizer("abcd", ";", false)).nextToken());
+
+        evaluateTestCase("T065", "R8 nextToken non-delimited string, valid delim, delims are tokens.",
+                "abcd",
+                () -> (new BasicTokenizer("abcd", ";", true)).nextToken());
+
+        evaluateTestCaseException("T066", "R9 nextToken delimited string, null delim.",
+                NullPointerException.class,
+                () -> (new BasicTokenizer("a b c d", null)).nextToken());
+//TODO: Jamie is R10 correct? It leads me to think "a " should be the return, not "a"
+        evaluateTestCase("T067", "R10 nextToken delimited string, empty delim.",
+                "a ",
+                () -> (new BasicTokenizer("a b c d", " ")).nextToken());
+
+        evaluateTestCase("T068", "R11 nextToken delimited string, valid delim, delims are not tokens.",
+                "a",
+                () -> (new BasicTokenizer("a b,c d", " ", false)).nextToken());
+
+        evaluateTestCase("T069", "R12 nextToken delimited string, valid delim, delims are tokens.",
+                "a",
+                () -> (new BasicTokenizer("a b,c d", " ", true)).nextToken());
+
+        // </editor-fold>
+
         // <editor-fold defaultstate="collapsed" desc="Test HasMoreElements BVT">
         //Test HasMoreElements BVT
         evaluateTestCase("T101", "hasMoreElements normal",
@@ -244,6 +305,7 @@ public class BasicTokenizerTester {
                 () -> (new BasicTokenizer("a b c d", null)).hasMoreElements());
         // </editor-fold>
 
+        // <editor-fold defaultstate="collapsed" desc="Test NextElement BVT">
         //Test NextElement BVT
         evaluateTestCase("T105", "nextElement normal",
                 "a",
@@ -257,6 +319,9 @@ public class BasicTokenizerTester {
                 NullPointerException.class,
                 () -> (new BasicTokenizer("a b c d", null)).nextElement());
 
+        // </editor-fold>
+
+        // <editor-fold defaultstate="collapsed" desc="Test HasMoreElements HasMoreTokens Special Cases">
         //Test HasMoreElements Special Cases
         //Test HasMoreTokens Special Cases
         evaluateTestCase("T109", "hasMoreElements Vs hasMoreTokens, Default Constructor",
@@ -275,6 +340,9 @@ public class BasicTokenizerTester {
                 true,
                 () -> testHasMoreElementsVsHasMoreTokens(new BasicTokenizer("a b c d", " ", false)));
 
+        // </editor-fold>
+
+        // <editor-fold defaultstate="collapsed" desc="Test HasMoreElements Decision Table">
         //Test hasMoreElements Decision Table
         evaluateTestCaseException("T114", "R2 hasMoreElements empty string, null delim.",
                 NullPointerException.class,
@@ -320,6 +388,9 @@ public class BasicTokenizerTester {
                 true,
                 () -> (new BasicTokenizer("a b,c d", " ", true)).hasMoreElements());
 
+        // </editor-fold>
+
+        // <editor-fold defaultstate="collapsed" desc="Test NextElement Decision Table">
         //Test NextElement Decision Table
         evaluateTestCaseException("T125", "R2 nextElement empty string, null delim.",
                 NullPointerException.class,
@@ -365,6 +436,9 @@ public class BasicTokenizerTester {
                 "a",
                 () -> (new BasicTokenizer("a b,c d", " ", true)).nextElement());
 
+        // </editor-fold>
+
+        // <editor-fold defaultstate="collapsed" desc="Test NextToken(delim) Decision Table">
         //Test NextToken(delim)        
         evaluateTestCaseException("T151", "R1 NextTokenDelim null string.",
                 NullPointerException.class,
@@ -414,6 +488,9 @@ public class BasicTokenizerTester {
                 "a b",
                 () -> (new BasicTokenizer("a b,c d", " ", true)).nextToken(","));
 
+        // </editor-fold>
+
+        // <editor-fold defaultstate="collapsed" desc="Test Ad Hoc">
         //Ad Hoc test will need a new TestCase for each scenario
         evaluateTestCase("T200", "R11 Iterate tokens delimited text",
                 true,
@@ -481,8 +558,8 @@ public class BasicTokenizerTester {
                         new BasicTokenizer("a,b;c,d", ",;", true),
                         new ArrayList<>(Arrays.asList("a", ",", "b", ";", "c", ",", "d"))));
         
-        
-        
+        // </editor-fold>
+
     } // end main
 
     /**
