@@ -204,11 +204,11 @@ public class BasicTokenizerTester {
                 () -> (new BasicTokenizer("abcd")).hasMoreTokens());
 
         evaluateTestCase("T053", "hasMoreTokens empty text.",
-                true,
+                false,
                 () -> (new BasicTokenizer("")).hasMoreTokens());
 
-        evaluateTestCase("T054", "hasMoreTokens null delim. Should fail.",
-                false,
+        evaluateTestCaseException("T054", "hasMoreTokens null delim. Should fail.",
+                NullPointerException.class,
                 () -> (new BasicTokenizer("a b c d", null)).hasMoreTokens());
         
         
