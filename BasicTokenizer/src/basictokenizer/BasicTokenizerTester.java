@@ -192,7 +192,7 @@ public class BasicTokenizerTester {
                 true,
                 () -> (new BasicTokenizer("")).hasMoreTokens());
 
-        evaluateTestCase("T053", "hasMoreTokens null delim. Should fail.",
+        evaluateTestCase("T054", "hasMoreTokens null delim. Should fail.",
                 false,
                 () -> (new BasicTokenizer("a b c d", null)).hasMoreTokens());
         
