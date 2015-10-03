@@ -147,9 +147,13 @@ public class BasicTokenizerTester {
                 "abcd",
                 () -> (new BasicTokenizer("abcd")).nextElement());
 
-        evaluateTestCaseException("T105", "nextElement null delimiter",
+        evaluateTestCaseException("T107", "nextElement null delimiter",
                 NullPointerException.class,
                 () -> (new BasicTokenizer("a b c d", null)).nextElement());
+
+        evaluateTestCase("T109", "nextElement null delimiter",
+                true,
+                () -> (new BasicTokenizer("a b c d")).testHasMoreElementsVsHasMoreTokens());
 
         //Test NextToken(delim)        
         evaluateTestCaseException("T151", "R1 NextTokenDelim null string.",
@@ -426,6 +430,10 @@ public class BasicTokenizerTester {
             remaining--;
         }
         return !basicTokenizer.hasMoreElements();
+    }
+    
+    private static Boolean testHasMoreElementsVsHasMoreTokens(BasicTokenizer basicTokenizer){
+        return (basicTokenizer.hasMoreElements() == basicTokenizer.hasMoreTokens();
     }
 
 } // end class BasicTokenizerTester
