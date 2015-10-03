@@ -275,10 +275,10 @@ public class BasicTokenizerTester {
         evaluateTestCaseException("T066", "R9 nextToken delimited string, null delim.",
                 NullPointerException.class,
                 () -> (new BasicTokenizer("a b c d", null)).nextToken());
-//TODO: Jamie is R10 correct? It leads me to think "a " should be the return, not "a"
+
         evaluateTestCase("T067", "R10 nextToken delimited string, empty delim.",
-                "a ",
-                () -> (new BasicTokenizer("a b c d", " ")).nextToken());
+                "a b c d",
+                () -> (new BasicTokenizer("a b c d", "")).nextToken());
 
         evaluateTestCase("T068", "R11 nextToken delimited string, valid delim, delims are not tokens.",
                 "a",
@@ -423,10 +423,10 @@ public class BasicTokenizerTester {
         evaluateTestCaseException("T132", "R9 nextElement delimited string, null delim.",
                 NullPointerException.class,
                 () -> (new BasicTokenizer("a b c d", null)).nextElement());
-//TODO: Jamie is R10 correct? It leads me to think "a " should be the return, not "a"
+
         evaluateTestCase("T133", "R10 nextElement delimited string, empty delim.",
-                "a ",
-                () -> (new BasicTokenizer("a b c d", " ")).nextElement());
+                "a b c d",
+                () -> (new BasicTokenizer("a b c d", "")).nextElement());
 
         evaluateTestCase("T134", "R11 nextElement delimited string, valid delim, delims are not tokens.",
                 "a",
