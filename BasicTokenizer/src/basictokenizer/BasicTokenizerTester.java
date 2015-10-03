@@ -185,15 +185,15 @@ public class BasicTokenizerTester {
                 () -> (new BasicTokenizer("")).nextToken());
         
         //Test HasMoreElements
-        evaluateTestCase("T101", "hasMoreTokens normal",
+        evaluateTestCase("T101", "hasMoreElements normal",
                 true,
                 () -> (new BasicTokenizer("a b c d")).hasMoreElements());
 
-        evaluateTestCase("T102", "hasMoreTokens delimiter not in text",
+        evaluateTestCase("T102", "hasMoreElements delimiter not in text",
                 true,
                 () -> (new BasicTokenizer("abcd")).hasMoreElements());
 
-        evaluateTestCaseException("T103", "hasMoreTokens null delimiter.",
+        evaluateTestCaseException("T103", "hasMoreElements null delimiter.",
                 NullPointerException.class,
                 () -> (new BasicTokenizer("a b c d", null)).hasMoreElements());
 
@@ -210,9 +210,66 @@ public class BasicTokenizerTester {
                 NullPointerException.class,
                 () -> (new BasicTokenizer("a b c d", null)).nextElement());
 
-        evaluateTestCase("T109", "hasMoreElements Vs hasMoreTokens",
+        evaluateTestCase("T109", "hasMoreElements Vs hasMoreTokens, Default Constructor",
                 true,
                 () -> testHasMoreElementsVsHasMoreTokens(new BasicTokenizer("a b c d")));
+
+        evaluateTestCase("T110", "hasMoreElements Vs hasMoreTokens, Constructor 2",
+                true,
+                () -> testHasMoreElementsVsHasMoreTokens(new BasicTokenizer("a b c d", " ")));
+
+        evaluateTestCase("T111", "hasMoreElements Vs hasMoreTokens, Constructor 3, True",
+                true,
+                () -> testHasMoreElementsVsHasMoreTokens(new BasicTokenizer("a b c d", " ", true)));
+
+        evaluateTestCase("T112", "hasMoreElements Vs hasMoreTokens, Constructor 3, False",
+                true,
+                () -> testHasMoreElementsVsHasMoreTokens(new BasicTokenizer("a b c d", " ", false)));
+
+        //Test hasMoreElements        
+        evaluateTestCaseException("T114", "R2 hasMoreElements empty string, null delim.",
+                NullPointerException.class,
+                () -> (new BasicTokenizer("", null)).hasMoreElements());
+
+        evaluateTestCase("T115", "R3 hasMoreElements empty string, empty delim.",
+                false,
+                () -> (new BasicTokenizer("", "")).hasMoreElements());
+
+        evaluateTestCase("T116", "R4 hasMoreElements empty string, valid delim.",
+                false,
+                () -> (new BasicTokenizer("", ";")).hasMoreElements());
+
+        evaluateTestCaseException("T117", "R5 hasMoreElements non-delimited string, null delim.",
+                NullPointerException.class,
+                () -> (new BasicTokenizer("abcd", null)).hasMoreElements());
+
+        evaluateTestCase("T118", "R6 hasMoreElements non-delimited string, empty delim.",
+                true,
+                () -> (new BasicTokenizer("abcd", "")).hasMoreElements());
+
+        evaluateTestCase("T119", "R7 hasMoreElements non-delimited string, valid delim, delims are not tokens.",
+                true,
+                () -> (new BasicTokenizer("abcd", ";", false)).hasMoreElements());
+
+        evaluateTestCase("T120", "R8 hasMoreElements non-delimited string, valid delim, delims are tokens.",
+                true,
+                () -> (new BasicTokenizer("abcd", ";", true)).hasMoreElements());
+
+        evaluateTestCaseException("T121", "R9 hasMoreElements delimited string, null delim.",
+                NullPointerException.class,
+                () -> (new BasicTokenizer("a b c d", null)).hasMoreElements());
+
+        evaluateTestCase("T122", "R10 hasMoreElements delimited string, empty delim.",
+                true,
+                () -> (new BasicTokenizer("a b c d", " ")).hasMoreElements());
+
+        evaluateTestCase("T123", "R11 hasMoreElements delimited string, valid delim, delims are not tokens.",
+                true,
+                () -> (new BasicTokenizer("a b,c d", " ", false)).hasMoreElements());
+
+        evaluateTestCase("T124", "R12 hasMoreElements delimited string, valid delim, delims are tokens.",
+                true,
+                () -> (new BasicTokenizer("a b,c d", " ", true)).hasMoreElements());
 
         //Test NextToken(delim)        
         evaluateTestCaseException("T151", "R1 NextTokenDelim null string.",
