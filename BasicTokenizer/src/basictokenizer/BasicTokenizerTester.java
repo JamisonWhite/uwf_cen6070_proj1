@@ -436,6 +436,11 @@ public class BasicTokenizerTester {
         return !basicTokenizer.hasMoreElements();
     }
     
+    /**
+     * Tests that hasMoreElements returns the same value as hasMoreTokens
+     * @param basicTokenizer
+     * @return 
+     */
     private static Boolean testHasMoreElementsVsHasMoreTokens(BasicTokenizer basicTokenizer){
         return basicTokenizer.hasMoreElements() == basicTokenizer.hasMoreTokens();
     }
