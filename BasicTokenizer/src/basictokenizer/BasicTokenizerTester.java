@@ -154,6 +154,28 @@ public class BasicTokenizerTester {
                 () -> (new BasicTokenizer("a b c d", " , \\t\\n\\r\\f", true)).countTokens());
 
         // </editor-fold>
+        
+        // <editor-fold defaultstate="collapsed" desc="Test CountTokens Equals NumberNextToken Calls Special Cases">
+        
+        //Test the number of times that this tokenizer's nextToken method can be called before it generates an exception Special Cases
+        evaluateTestCase("T028", "countTokens == nextToken Calls, Default Constructor",
+                true,
+                () -> testCountTokensEqualsNumberNextTokenCalls(new BasicTokenizer("a b c d")));
+
+        evaluateTestCase("T029", "countTokens == nextToken Calls, Constructor 2",
+                true,
+                () -> testCountTokensEqualsNumberNextTokenCalls(new BasicTokenizer("a b c d", " ")));
+
+        evaluateTestCase("T030", "countTokens == nextToken Calls, Constructor 3, True",
+                true,
+                () -> testCountTokensEqualsNumberNextTokenCalls(new BasicTokenizer("a b c d", " ", true)));
+
+        evaluateTestCase("T031", "countTokens == nextToken Calls, Constructor 3, False",
+                true,
+                () -> testCountTokensEqualsNumberNextTokenCalls(new BasicTokenizer("a b c d", " ", false)));
+       
+        // </editor-fold>
+
 
         // <editor-fold defaultstate="collapsed" desc="Test HasMoreTokens Decision Table">
         //Test HasMoreTokens
@@ -661,7 +683,6 @@ public class BasicTokenizerTester {
      */
     private static Boolean useSubmissionFormat;
 
-
     /**
      * Token iteration test will use hasMoreTokens, countTokens, and nextToken
      * on each iteration.
@@ -734,6 +755,29 @@ public class BasicTokenizerTester {
      */
     private static Boolean testHasMoreElementsVsHasMoreTokens(BasicTokenizer basicTokenizer){
         return basicTokenizer.hasMoreElements() == basicTokenizer.hasMoreTokens();
+    }
+
+    /**
+     * Tests the number of times that this tokenizer's nextToken method can be called before it generates an exception
+     * @param basicTokenizer
+     * @return 
+     */
+    private static Boolean testCountTokensEqualsNumberNextTokenCalls(BasicTokenizer basicTokenizer){
+        int tokenCount = basicTokenizer.countTokens();
+        Boolean throwsExpectedException;
+        
+        for (int i = 0; i < tokenCount; i++){
+            basicTokenizer.nextToken();
+        }
+        
+        try {
+            basicTokenizer.nextToken();
+            throwsExpectedException = false;
+        }
+        catch (Exception Ex){
+            throwsExpectedException = true;
+        }
+        return throwsExpectedException;
     }
 
 } // end class BasicTokenizerTester
