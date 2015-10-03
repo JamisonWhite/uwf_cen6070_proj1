@@ -124,7 +124,11 @@ public class BasicTokenizerTester {
         evaluateTestCaseException("T057", "nextToken  null delimiter.",
                 NullPointerException.class,
                 () -> (new BasicTokenizer("a b c d", null)).nextToken());
-
+        
+        evaluateTestCaseException("T058", "nextToken  empty text.",
+                NullPointerException.class,
+                () -> (new BasicTokenizer("")).nextToken());
+        
         //Test HasMoreElements
         evaluateTestCase("T101", "hasMoreTokens normal",
                 true,
