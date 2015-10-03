@@ -195,9 +195,21 @@ public class BasicTokenizerTester {
                 NullPointerException.class,
                 () -> (new BasicTokenizer("a b c d", null)).nextElement());
 
-        evaluateTestCase("T109", "hasMoreElements Vs hasMoreTokens",
+        evaluateTestCase("T109", "hasMoreElements Vs hasMoreTokens, Default Constructor",
                 true,
                 () -> testHasMoreElementsVsHasMoreTokens(new BasicTokenizer("a b c d")));
+
+        evaluateTestCase("T110", "hasMoreElements Vs hasMoreTokens, Constructor 2",
+                true,
+                () -> testHasMoreElementsVsHasMoreTokens(new BasicTokenizer("a b c d", " ")));
+
+        evaluateTestCase("T111", "hasMoreElements Vs hasMoreTokens, Constructor 3, True",
+                true,
+                () -> testHasMoreElementsVsHasMoreTokens(new BasicTokenizer("a b c d", " ", true)));
+
+        evaluateTestCase("T112", "hasMoreElements Vs hasMoreTokens, Constructor 3, False",
+                true,
+                () -> testHasMoreElementsVsHasMoreTokens(new BasicTokenizer("a b c d", " ", false)));
 
         //Test NextToken(delim)        
         evaluateTestCaseException("T151", "R1 NextTokenDelim null string.",
