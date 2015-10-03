@@ -114,17 +114,17 @@ public class BasicTokenizerTester {
         
 
         //Test CountTokens        
-        evaluateTestCase("TXXX", "countTokens normal.",
+        evaluateTestCase("T019", "countTokens R4.",
+                0,
+                () -> (new BasicTokenizer("")).countTokens());
+
+        evaluateTestCase("T020", "countTokens no delims in text.",
+                1,
+                () -> (new BasicTokenizer("a")).countTokens());
+
+        evaluateTestCase("T021", "countTokens empty delims.",
                 4,
                 () -> (new BasicTokenizer("a b c d")).countTokens());
-
-        evaluateTestCase("TXXX", "countTokens no delims in text.",
-                1,
-                () -> (new BasicTokenizer("abcd")).countTokens());
-
-        evaluateTestCase("TXXX", "countTokens empty delims.",
-                1,
-                () -> (new BasicTokenizer("a b c d", "")).countTokens());
 
         evaluateTestCaseException("TXXX", "countTokens null delim.",
                 NullPointerException.class,
