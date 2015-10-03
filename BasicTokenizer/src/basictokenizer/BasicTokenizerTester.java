@@ -96,19 +96,19 @@ public class BasicTokenizerTester {
         //etc....
 
         //Test HasMoreTokens
-        evaluateTestCase("TXXX", "hasMoreTokens normal.",
+        evaluateTestCase("T051", "hasMoreTokens normal.",
                 true,
                 () -> (new BasicTokenizer("a b c d")).hasMoreTokens());
 
-        evaluateTestCase("TXXX", "hasMoreTokens no delims in text.",
+        evaluateTestCase("T052", "hasMoreTokens no delims in text.",
                 true,
                 () -> (new BasicTokenizer("abcd")).hasMoreTokens());
 
-        evaluateTestCase("TXXX", "hasMoreTokens empty text.",
+        evaluateTestCase("T053", "hasMoreTokens empty text.",
                 true,
                 () -> (new BasicTokenizer("")).hasMoreTokens());
 
-        evaluateTestCase("TXXX", "hasMoreTokens null delim. Should fail.",
+        evaluateTestCase("T054", "hasMoreTokens null delim. Should fail.",
                 false,
                 () -> (new BasicTokenizer("a b c d", null)).hasMoreTokens());
 
@@ -124,63 +124,68 @@ public class BasicTokenizerTester {
         evaluateTestCaseException("T057", "nextToken  null delimiter.",
                 NullPointerException.class,
                 () -> (new BasicTokenizer("a b c d", null)).nextToken());
+        
+        evaluateTestCaseException("T058", "nextToken  empty text.",
+                NullPointerException.class,
+                () -> (new BasicTokenizer("")).nextToken());
+        
 
         //Test HasMoreElements
-        evaluateTestCase("T101", "hasMoreTokens normal",
+        evaluateTestCase("T059", "hasMoreTokens normal",
                 true,
                 () -> (new BasicTokenizer("a b c d")).hasMoreElements());
 
-        evaluateTestCase("T102", "hasMoreTokens delimiter not in text",
+        evaluateTestCase("T060", "hasMoreTokens delimiter not in text",
                 true,
                 () -> (new BasicTokenizer("abcd")).hasMoreElements());
 
-        evaluateTestCaseException("T103", "hasMoreTokens null delimiter.",
+        evaluateTestCaseException("T061", "hasMoreTokens null delimiter.",
                 NullPointerException.class,
                 () -> (new BasicTokenizer("a b c d", null)).hasMoreElements());
 
         //Test NextElement
-        evaluateTestCase("T105", "nextElement normal",
+        evaluateTestCase("T062", "nextElement normal",
                 "a",
                 () -> (new BasicTokenizer("a b c d")).nextElement());
 
-        evaluateTestCase("T106", "nextElement no delimiter",
+        evaluateTestCase("T063", "nextElement no delimiter",
                 "abcd",
                 () -> (new BasicTokenizer("abcd")).nextElement());
 
-        evaluateTestCaseException("T105", "nextElement null delimiter",
+        evaluateTestCaseException("T064", "nextElement null delimiter",
                 NullPointerException.class,
                 () -> (new BasicTokenizer("a b c d", null)).nextElement());
 
         //Test NextToken(delim)        
-        evaluateTestCaseException("T151", "R1 NextTokenDelim null string.",
+        evaluateTestCaseException("T065", "R1 NextTokenDelim null string.",
                 NullPointerException.class,
                 () -> (new BasicTokenizer(null)).nextToken(","));
         
-        evaluateTestCaseException("T152", "R2 NextTokenDelim empty string, null delim.",
+        evaluateTestCaseException("T066", "R2 NextTokenDelim empty string, null delim.",
                 NullPointerException.class,
                 () -> (new BasicTokenizer("a b,c d")).nextToken(null));
 
-        evaluateTestCaseException("T153", "R3 NextTokenDelim empty string, empty delim.",
+        evaluateTestCaseException("T067", "R3 NextTokenDelim empty string, empty delim.",
                 NoSuchElementException.class,
                 () -> (new BasicTokenizer("")).nextToken(""));
 
-        evaluateTestCaseException("T154", "R4 NextTokenDelim empty string, valid delim.",
+        evaluateTestCaseException("T068", "R4 NextTokenDelim empty string, valid delim.",
                 NoSuchElementException.class,
                 () -> (new BasicTokenizer("")).nextToken(","));
 
-        evaluateTestCaseException("T155", "R5 NextTokenDelim non-delimited string, null delim.",
+        evaluateTestCaseException("T069", "R5 NextTokenDelim non-delimited string, null delim.",
                 NullPointerException.class,
                 () -> (new BasicTokenizer("abcd")).nextToken(null));
 
-        evaluateTestCase("T156", "R6 NextTokenDelim non-delimited string, empty delim.",
+        evaluateTestCase("T070", "R6 NextTokenDelim non-delimited string, empty delim.",
                 "abcd",
                 () -> (new BasicTokenizer("abcd")).nextToken(""));
 
-        evaluateTestCase("T157", "R7 NextTokenDelim non-delimited string, valid delim, delims are not tokens.",
+        evaluateTestCase("T071", "R7 NextTokenDelim non-delimited string, valid delim, delims are not tokens.",
                 "abcd",
                 () -> (new BasicTokenizer("abcd", " ", false)).nextToken(","));
 
-        evaluateTestCase("T158", "R8 NextTokenDelim non-delimited string, valid delim, delims are tokens.",
+        evaluateTestCase("T072", "R8 NextTokenDelim non-delimited string, valid delim, delims are tokens.",
                 "abcd",
                 () -> (new BasicTokenizer("abcd", " ", true)).nextToken(","));
 
@@ -188,46 +193,46 @@ public class BasicTokenizerTester {
                 NullPointerException.class,
                 () -> (new BasicTokenizer("a b c d")).nextToken(null));
 
-        evaluateTestCase("T160", "R10 NextTokenDelim delimited string, empty delim.",
+        evaluateTestCase("T073", "R10 NextTokenDelim delimited string, empty delim.",
                 "a b c d",
                 () -> (new BasicTokenizer("a b c d")).nextToken(""));
 
-        evaluateTestCase("T161", "R11 NextTokenDelim delimited string, valid delim, delims are not tokens.",
+        evaluateTestCase("T074", "R11 NextTokenDelim delimited string, valid delim, delims are not tokens.",
                 "a b",
                 () -> (new BasicTokenizer("a b,c d", " ", false)).nextToken(","));
 
-        evaluateTestCase("T162", "R12 NextTokenDelim delimited string, valid delim, delims are tokens.",
+        evaluateTestCase("T075", "R12 NextTokenDelim delimited string, valid delim, delims are tokens.",
                 "a b",
                 () -> (new BasicTokenizer("a b,c d", " ", true)).nextToken(","));
 
         //Ad Hoc test will need a new TestCase for each scenario
-        evaluateTestCase("T200", "R11 Iterate tokens delimited text",
+        evaluateTestCase("T076", "R11 Iterate tokens delimited text",
                 true,
                 () -> BasicTokenizerTester.testTokenIteration(
                         new BasicTokenizer("a,b,c,d", ","),
                         new ArrayList<>(Arrays.asList("a", "b", "c", "d"))));
         
-        evaluateTestCase("T201", "R11 Iterate tokens delimited text with empty token at end",
+        evaluateTestCase("T077", "R11 Iterate tokens delimited text with empty token at end",
                 true,
                 () -> BasicTokenizerTester.testTokenIteration(
                         new BasicTokenizer("a,b,c,d,", ","),
                         new ArrayList<>(Arrays.asList("a", "b", "c", "d"))));
         
-        evaluateTestCase("T202", "R11 Iterate tokens delimited text with consecutive delimiters",
+        evaluateTestCase("T076", "R11 Iterate tokens delimited text with consecutive delimiters",
                 true,
                 () -> BasicTokenizerTester.testTokenIteration(
                         new BasicTokenizer("a,b,,c,d", ","),
                         new ArrayList<>(Arrays.asList("a", "b", "c", "d"))));
         
         
-        evaluateTestCase("T203", "R12 Iterate tokens delimited text with delimiters as tokens",
+        evaluateTestCase("T077", "R12 Iterate tokens delimited text with delimiters as tokens",
                 true,
                 () -> BasicTokenizerTester.testTokenIteration(
                         new BasicTokenizer("a,b,c,d", ",", true),
                         new ArrayList<>(Arrays.asList("a", ",", "b", ",", "c", ",", "d"))));
         
                 
-        evaluateTestCase("T204", "R12 Iterate tokens delimited text with multiple characters and delimiters as tokens",
+        evaluateTestCase("T078", "R12 Iterate tokens delimited text with multiple characters and delimiters as tokens",
                 true,
                 () -> BasicTokenizerTester.testTokenIteration(
                         new BasicTokenizer("a,b;c,d", ",;", true),
@@ -235,33 +240,33 @@ public class BasicTokenizerTester {
         
         
         
-        evaluateTestCase("T205", "R11 Iterate elements delimited text",
+        evaluateTestCase("T079", "R11 Iterate elements delimited text",
                 true,
                 () -> BasicTokenizerTester.testElementIteration(
                         new BasicTokenizer("a,b,c,d", ","),
                         new ArrayList<>(Arrays.asList("a", "b", "c", "d"))));
         
-        evaluateTestCase("T206", "R11 Iterate elements delimited text with empty token at end",
+        evaluateTestCase("T080", "R11 Iterate elements delimited text with empty token at end",
                 true,
                 () -> BasicTokenizerTester.testElementIteration(
                         new BasicTokenizer("a,b,c,d,", ","),
                         new ArrayList<>(Arrays.asList("a", "b", "c", "d"))));
         
-        evaluateTestCase("T207", "R11 Iterate elements delimited text with consecutive delimiters",
+        evaluateTestCase("T081", "R11 Iterate elements delimited text with consecutive delimiters",
                 true,
                 () -> BasicTokenizerTester.testElementIteration(
                         new BasicTokenizer("a,b,,c,d", ","),
                         new ArrayList<>(Arrays.asList("a", "b", "c", "d"))));
         
         
-        evaluateTestCase("T208", "R12 Iterate elements delimited text with delimiters as tokens",
+        evaluateTestCase("T082", "R12 Iterate elements delimited text with delimiters as tokens",
                 true,
                 () -> BasicTokenizerTester.testElementIteration(
                         new BasicTokenizer("a,b,c,d", ",", true),
                         new ArrayList<>(Arrays.asList("a", ",", "b", ",", "c", ",", "d"))));
         
                 
-        evaluateTestCase("T209", "R12 Iterate elements delimited text with multiple characters and delimiters as tokens",
+        evaluateTestCase("T082", "R12 Iterate elements delimited text with multiple characters and delimiters as tokens",
                 true,
                 () -> BasicTokenizerTester.testElementIteration(
                         new BasicTokenizer("a,b;c,d", ",;", true),
