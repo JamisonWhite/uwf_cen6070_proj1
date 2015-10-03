@@ -36,42 +36,82 @@ public class BasicTokenizerTester {
         //TODO We need the Decision table to help us narrow down the possibilities!
         useSubmissionFormat = false;
 
-        //Test Constructors        
-        evaluateTestCase("TXXX", "Constructor 1 valid text.",
-                true,
-                () -> (new BasicTokenizer("a b c d")) != null);
-
-        evaluateTestCase("TXXX", "Constructor 1 empty text.",
-                true,
-                () -> (new BasicTokenizer("")) != null);
-
-        evaluateTestCaseException("TXXX", "Constructor 1 null text.",
+        //Test Constructors
+        evaluateTestCaseException("T001", "Constructor 1 null text.",
                 NullPointerException.class,
                 () -> (new BasicTokenizer(null)) != null);
 
-        evaluateTestCase("TXXX", "Constructor 2 valid text and valid delim.",
+        evaluateTestCase("T002", "Constructor 1 empty text.",
                 true,
-                () -> (new BasicTokenizer("a b c d", " ")) != null);
+                () -> (new BasicTokenizer("")) != null);
 
-        evaluateTestCase("TXXX", "Constructor 2 valid text and empty delim.",
+        evaluateTestCase("T003", "Constructor 1 one character string.",
                 true,
-                () -> (new BasicTokenizer("a b c d", "")) != null);
+                () -> (new BasicTokenizer("a")) != null);
 
-        evaluateTestCase("TXXX", "Constructor 2 valid text and null delim.",
+        evaluateTestCase("T004", "Constructor 1 inside boundary string.",
+                true,
+                () -> (new BasicTokenizer("a b c d")) != null);
+        
+
+
+        evaluateTestCase("T005", "Constructor 2 inside boundary string, null delimiter.",
                 true,
                 () -> (new BasicTokenizer("a b c d", null)) != null);
 
-        evaluateTestCase("TXXX", "Constructor 2 valid text and valid delim and true.",
+        evaluateTestCase("T006", "Constructor 2 inside boundary string, empty string delimiter.",
                 true,
-                () -> (new BasicTokenizer("a b c d", " ", true)) != null);
+                () -> (new BasicTokenizer("a b c d", "")) != null);
 
-        evaluateTestCase("TXXX", "Constructor 2 valid text and valid delim and false.",
+        evaluateTestCase("T007", "Constructor 2 inside boundary string, one character delimiter.",
                 true,
-                () -> (new BasicTokenizer("a b c d", " ", false)) != null);
+                () -> (new BasicTokenizer("a b c d", "a")) != null);
 
-        evaluateTestCase("TXXX", "Constructor 2 valid text and non-unique delim.",
+        evaluateTestCase("T008", "Constructor 2 inside boundary string, inside boundary delimiter.",
                 true,
-                () -> (new BasicTokenizer("a b c d", "       ")) != null);
+                () -> (new BasicTokenizer("a b c d", " , \\t\\n\\r\\f")) != null);
+        
+        evaluateTestCaseException("T009", "Constructor 2 null string, inside boundary delimiter.",
+                NullPointerException.class,
+                () -> (new BasicTokenizer(null, " , \\t\\n\\r\\f")) != null);
+
+        evaluateTestCase("T010", "Constructor 2 empty text, inside boundary delimiter.",
+                true,
+                () -> (new BasicTokenizer("", " , \\t\\n\\r\\f")) != null);
+
+        evaluateTestCase("T011", "Constructor 2 one character string, inside boundary delimiter.",
+                true,
+                () -> (new BasicTokenizer("a", " , \\t\\n\\r\\f")) != null);
+        
+
+        evaluateTestCase("T012", "Constructor 3 inside boundary string, null delimiter, return delimiter.",
+                true,
+                () -> (new BasicTokenizer("a b c d", null, true)) != null);
+        
+        evaluateTestCase("T013", "Constructor 3 inside boundary string, empty string delimiter, return delimiter.",
+                true,
+                () -> (new BasicTokenizer("a b c d", "", true)) != null);
+        
+        evaluateTestCase("T014", "Constructor 3 inside boundary string, one character delimiter, return delimiter.",
+                true,
+                () -> (new BasicTokenizer("a b c d", "b", true)) != null);
+        
+        evaluateTestCase("T015", "Constructor 3 inside boundary string, inside boundary delimiter, return delimiter.",
+                true,
+                () -> (new BasicTokenizer("a b c d", " , \\t\\n\\r\\f", true)) != null);
+        
+        evaluateTestCaseException("T016", "Constructor 3 null string, inside boundary delimiter, return delimiter.",
+                NullPointerException.class,
+                () -> (new BasicTokenizer(null, " , \\t\\n\\r\\f")) != null);
+        
+        evaluateTestCase("T017", "Constructor 3 empty string, inside boundary delimiter, return delimiter.",
+                true,
+                () -> (new BasicTokenizer("", " , \\t\\n\\r\\f", true)) != null);
+        
+        evaluateTestCase("T018", "Constructor 3 one character string, inside boundary delimiter, return delimiter.",
+                true,
+                () -> (new BasicTokenizer("c", " , \\t\\n\\r\\f", true)) != null);
+        
 
         //Test CountTokens        
         evaluateTestCase("TXXX", "countTokens normal.",
