@@ -206,39 +206,39 @@ public class BasicTokenizerTester {
         
         evaluateTestCaseException("T152", "R2 NextTokenDelim empty string, null delim.",
                 NullPointerException.class,
-                () -> (new BasicTokenizer("a b,c d")).nextToken(null));
+                () -> (new BasicTokenizer("", null)).nextToken(null));
 
         evaluateTestCaseException("T153", "R3 NextTokenDelim empty string, empty delim.",
                 NoSuchElementException.class,
-                () -> (new BasicTokenizer("")).nextToken(""));
+                () -> (new BasicTokenizer("", "")).nextToken(""));
 
         evaluateTestCaseException("T154", "R4 NextTokenDelim empty string, valid delim.",
                 NoSuchElementException.class,
-                () -> (new BasicTokenizer("")).nextToken(","));
+                () -> (new BasicTokenizer("", ";")).nextToken(","));
 
         evaluateTestCaseException("T155", "R5 NextTokenDelim non-delimited string, null delim.",
                 NullPointerException.class,
-                () -> (new BasicTokenizer("abcd")).nextToken(null));
+                () -> (new BasicTokenizer("abcd", null)).nextToken(null));
 
         evaluateTestCase("T156", "R6 NextTokenDelim non-delimited string, empty delim.",
                 "abcd",
-                () -> (new BasicTokenizer("abcd")).nextToken(""));
+                () -> (new BasicTokenizer("abcd", "")).nextToken(""));
 
         evaluateTestCase("T157", "R7 NextTokenDelim non-delimited string, valid delim, delims are not tokens.",
                 "abcd",
-                () -> (new BasicTokenizer("abcd", " ", false)).nextToken(","));
+                () -> (new BasicTokenizer("abcd", ";", false)).nextToken(","));
 
         evaluateTestCase("T158", "R8 NextTokenDelim non-delimited string, valid delim, delims are tokens.",
                 "abcd",
-                () -> (new BasicTokenizer("abcd", " ", true)).nextToken(","));
+                () -> (new BasicTokenizer("abcd", ";", true)).nextToken(","));
 
         evaluateTestCaseException("T159", "R9 NextTokenDelim delimited string, null delim.",
                 NullPointerException.class,
-                () -> (new BasicTokenizer("a b c d")).nextToken(null));
+                () -> (new BasicTokenizer("a b c d", null)).nextToken(null));
 
         evaluateTestCase("T160", "R10 NextTokenDelim delimited string, empty delim.",
                 "a b c d",
-                () -> (new BasicTokenizer("a b c d")).nextToken(""));
+                () -> (new BasicTokenizer("a b c d", " ")).nextToken(""));
 
         evaluateTestCase("T161", "R11 NextTokenDelim delimited string, valid delim, delims are not tokens.",
                 "a b",
@@ -432,13 +432,17 @@ public class BasicTokenizerTester {
         Integer remaining = expected.size();
         for (String exp : expected) {
 
+            if (basicTokenizer.hasMoreTokens() != basicTokenizer.hasMoreElements()) {
+                return false;
+            }
+            
             if (!basicTokenizer.hasMoreTokens()) {
                 return false;
             }
-
+            
             if (remaining != basicTokenizer.countTokens()) {
                 return false;
-            }
+            }                      
 
             String token = basicTokenizer.nextToken();
             if (!exp.equals(token)) {
@@ -462,6 +466,10 @@ public class BasicTokenizerTester {
     private static Boolean testElementIteration(BasicTokenizer basicTokenizer, List<Object> expected) {
         Integer remaining = expected.size();
         for (Object exp : expected) {
+
+            if (basicTokenizer.hasMoreTokens() != basicTokenizer.hasMoreElements()) {
+                return false;
+            }
 
             if (!basicTokenizer.hasMoreElements()) {
                 return false;
