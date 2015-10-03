@@ -229,8 +229,7 @@ public class BasicTokenizerTester {
                 NoSuchElementException.class,
                 () -> (new BasicTokenizer("")).nextToken());
         
-        //Test HasMoreElements
-        
+        //Test HasMoreElements BVT
         evaluateTestCase("T101", "hasMoreElements normal",
                 true,
                 () -> (new BasicTokenizer("a b c d")).hasMoreElements());
@@ -243,7 +242,7 @@ public class BasicTokenizerTester {
                 NullPointerException.class,
                 () -> (new BasicTokenizer("a b c d", null)).hasMoreElements());
 
-        //Test NextElement
+        //Test NextElement BVT
         evaluateTestCase("T105", "nextElement normal",
                 "a",
                 () -> (new BasicTokenizer("a b c d")).nextElement());
@@ -256,6 +255,8 @@ public class BasicTokenizerTester {
                 NullPointerException.class,
                 () -> (new BasicTokenizer("a b c d", null)).nextElement());
 
+        //Test HasMoreElements Special Cases
+        //Test HasMoreTokens Special Cases
         evaluateTestCase("T109", "hasMoreElements Vs hasMoreTokens, Default Constructor",
                 true,
                 () -> testHasMoreElementsVsHasMoreTokens(new BasicTokenizer("a b c d")));
@@ -272,7 +273,7 @@ public class BasicTokenizerTester {
                 true,
                 () -> testHasMoreElementsVsHasMoreTokens(new BasicTokenizer("a b c d", " ", false)));
 
-        //Test hasMoreElements        
+        //Test hasMoreElements Decision Table
         evaluateTestCaseException("T114", "R2 hasMoreElements empty string, null delim.",
                 NullPointerException.class,
                 () -> (new BasicTokenizer("", null)).hasMoreElements());
@@ -316,6 +317,51 @@ public class BasicTokenizerTester {
         evaluateTestCase("T124", "R12 hasMoreElements delimited string, valid delim, delims are tokens.",
                 true,
                 () -> (new BasicTokenizer("a b,c d", " ", true)).hasMoreElements());
+
+        //Test NextElement Decision Table
+        evaluateTestCaseException("T125", "R2 nextElement empty string, null delim.",
+                NullPointerException.class,
+                () -> (new BasicTokenizer("", null)).nextElement());
+
+        evaluateTestCaseException("T126", "R3 nextElement empty string, empty delim.",
+                NoSuchElementException.class,
+                () -> (new BasicTokenizer("", "")).nextElement());
+
+        evaluateTestCaseException("T127", "R4 nextElement empty string, valid delim.",
+                NoSuchElementException.class,
+                () -> (new BasicTokenizer("", ";")).nextElement());
+
+        evaluateTestCaseException("T128", "R5 nextElement non-delimited string, null delim.",
+                NullPointerException.class,
+                () -> (new BasicTokenizer("abcd", null)).nextElement());
+
+        evaluateTestCase("T129", "R6 nextElement non-delimited string, empty delim.",
+                "abcd",
+                () -> (new BasicTokenizer("abcd", "")).nextElement());
+
+        evaluateTestCase("T130", "R7 nextElement non-delimited string, valid delim, delims are not tokens.",
+                "abcd",
+                () -> (new BasicTokenizer("abcd", ";", false)).nextElement());
+
+        evaluateTestCase("T131", "R8 nextElement non-delimited string, valid delim, delims are tokens.",
+                "abcd",
+                () -> (new BasicTokenizer("abcd", ";", true)).nextElement());
+
+        evaluateTestCaseException("T132", "R9 nextElement delimited string, null delim.",
+                NullPointerException.class,
+                () -> (new BasicTokenizer("a b c d", null)).nextElement());
+//TODO: Jamie is R10 correct? It leads me to think "a " should be the return, not "a"
+        evaluateTestCase("T133", "R10 nextElement delimited string, empty delim.",
+                "a ",
+                () -> (new BasicTokenizer("a b c d", " ")).nextElement());
+
+        evaluateTestCase("T134", "R11 nextElement delimited string, valid delim, delims are not tokens.",
+                "a",
+                () -> (new BasicTokenizer("a b,c d", " ", false)).nextElement());
+
+        evaluateTestCase("T135", "R12 nextElement delimited string, valid delim, delims are tokens.",
+                "a",
+                () -> (new BasicTokenizer("a b,c d", " ", true)).nextElement());
 
         //Test NextToken(delim)        
         evaluateTestCaseException("T151", "R1 NextTokenDelim null string.",
