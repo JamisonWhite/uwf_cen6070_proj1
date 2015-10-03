@@ -113,27 +113,42 @@ public class BasicTokenizerTester {
                 () -> (new BasicTokenizer("c", " , \\t\\n\\r\\f", true)) != null);
         
 
-        //Test CountTokens        
+        //Test CountTokens
         evaluateTestCase("T019", "countTokens R4.",
                 0,
                 () -> (new BasicTokenizer("")).countTokens());
 
-        evaluateTestCase("T020", "countTokens no delims in text.",
+        evaluateTestCase("T020", "countTokens count after T003.",
                 1,
                 () -> (new BasicTokenizer("a")).countTokens());
 
-        evaluateTestCase("T021", "countTokens empty delims.",
+        evaluateTestCase("T021", "countTokens R7.",
                 4,
                 () -> (new BasicTokenizer("a b c d")).countTokens());
 
-        evaluateTestCaseException("TXXX", "countTokens null delim.",
+        evaluateTestCaseException("T022", "countTokens null delim.",
                 NullPointerException.class,
                 () -> (new BasicTokenizer("a b c d", null)).countTokens());
-
-        evaluateTestCase("TXXX", "countTokens empty text.",
+        
+        evaluateTestCase("T023", "countTokens .",
                 0,
-                () -> (new BasicTokenizer("")).countTokens());
-        //etc....
+                () -> (new BasicTokenizer("", " , \\t\\n\\r\\f", true)).countTokens());
+        
+        evaluateTestCase("T024", "countTokens .",
+                1,
+                () -> (new BasicTokenizer("a", " , \\t\\n\\r\\f", true)).countTokens());
+        
+        evaluateTestCase("T025", "countTokens .",
+                2,
+                () -> (new BasicTokenizer("a ", " , \\t\\n\\r\\f", true)).countTokens());
+        
+        evaluateTestCase("T026", "countTokens .",
+                2,
+                () -> (new BasicTokenizer(" a", " , \\t\\n\\r\\f", true)).countTokens());
+        
+        evaluateTestCase("T027", "countTokens .",
+                7,
+                () -> (new BasicTokenizer("a b c d", " , \\t\\n\\r\\f", true)).countTokens());
 
         //Test HasMoreTokens
         evaluateTestCase("TXXX", "hasMoreTokens normal.",
